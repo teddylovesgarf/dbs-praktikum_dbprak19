@@ -1,11 +1,72 @@
-CREATE table produkt(
+-- generell stellt sich die Frage anhand welche Kriterien wir die Größe von versch. datatypes wählen
+-- welche werte/pk müssen explizit als unique deklariert werden?
+-- constraints und so fehlen (on cascade, not null, unique) 
+-- wie generaten wir IDs? auto_increment oder? 
+-- FK mitwirkende noch überall einfügen 
+-- datatypes überprüfen, ich habe varchar bei unsicherheit benutzt
+-- 'Autor',  buch  'Künstler', cd 'Schauspieler', dvd 'Regisseur', dvd 'Filmemacher', dvd , 'VERLAG' buch eigene Relation, 'Label', cd 
 
-)
+CREATE TYPE produkt_typ AS ENUM ('buch','cd','dvd'); 
+CREATE TYPE mitwirkende_rolle as ENUM ('Autor/in' , 'Künstler/in', 'Schauspieler/in', 'Filmemacher/in', 'Regisseur/in') ; 
+
+
+CREATE TABLE mitwirkinde(
+    mitwirkende_id VARCHAR(20) PRIMARY KEY, 
+    mitwirkende_name VARCHAR(200), 
+);
+
+CREATE TABLE mitwirkende_produkt(
+    produkt_id VARCHAR(20) PRIMARY KEY REFERENCES produkt(produkt_id),
+    mitwirkende_id VARCHAR(20) PRIMARY KEY REFERENCES mitwirkende_id, 
+    rolle mitwirkende_rolle PRIMARY KEY, 
+); 
+
+CREATE TABLE produkt(
+    produkt_id VARCHAR(20) PRIMARY KEY, 
+    titel VARCHAR(200), 
+    typ produkt_typ, 
+    rating NUMERIC(3,2),     -- rating can be written as a percentage 00,00 to 100,00 
+    verkaufsrang INTEGER CHECK (verkaufsrang > 0),    
+    bild, -- store as url or path VARCHAR ? 
+); 
+
+CREATE TABLE verlag(
+    verlag_id INTEGER PRIMARY KEY CHECK(verlag_id>0),   --sollen wir so die unsigned int problematik lösen?
+    verlag_name VARCHAR(200), 
+); 
+
+CREATE TABLE buch(
+    produkt_id VARCHAR(20) PRIMARY KEY REFERENCES produkt(produkt_id)
+    isbn VARCHAR(20) UNIQUE  --VARCHAR weil ISBN zeichen/buchstabe X enthalten können 
+    seitenzahl INTEGER CHECK (seitenzahl>0) 
+    erscheinungsdatum DATE --kein Check, da auch zukünftige Buchveröffentlichungen angezeigt werden können 
+    verlag_id INTEGER REFERENCES verlag(verlag_id)
+); 
+
+
+CREATE TABLE musik_cd(
+    produkt_id VARCHAR(20) PRIMARY KEY REFERENCES produkt(produkt_id),
+    cd_track INTEGER,      --track numbers Wie hoch ist die durchschnittliche Anzahl von Liedern einer Musik-CD?
+    cd_name VARCHAR(200) PRIMARY KEY,
+    label VARCHAR(200), 
+    erscheinungsdatum DATE, 
+); 
+
+-- cd Liste von Titeln, die durch ihren Namen gegeben sind.
+
+CREATE TABLE dvd(
+    produkt_id VARCHAR(20) PRIMARY KEY REFERENCES produkt(produkt_id),
+    format VARCHAR(100),
+    laufzeit VARCHAR(50), 
+);
+
+
+
 
 CREATE TABLE Filiale (
-Filiale_ID #unique INT PRIMARY KEY,
-Name TEXT,
-Anschrift TEXT,  
+filiale_ID #unique INT PRIMARY KEY,
+name TEXT,
+anschrift TEXT,  
 ); 
 
 
@@ -20,14 +81,7 @@ CREATE TABLE angebot (
 
 
 CREATE TABLE kunde (
-    kunde_ID INTEGER PRIMARY KEY,   #SERIAL 
-    name VARCHAR(50) NOT NULL,  #how long should we allow varchar 
+    kunde_ID INTEGER PRIMARY KEY, 
+    name VARCHAR(50) NOT NULL, 
+);
         
-
-
-        HAAAAAAAAAAAAAAAALLOOOOO 
-
-        TEST 
-         
-
-         HABEN WIR COMMITED?????
