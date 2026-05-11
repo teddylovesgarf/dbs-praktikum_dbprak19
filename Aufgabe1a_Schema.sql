@@ -85,3 +85,14 @@ CREATE TABLE kunde (
     name VARCHAR(50) NOT NULL, 
 );
         
+ Creat table poduct(
+    product_id VARCHAR(50) NOT NULL PRIMARY KEY,
+    tiel VARCHAR(255) NOT NULL,
+    rating INTEGER,
+    salesrank INTEGER,
+    picture VARCHAR(1000),
+    
+    CONSTRAIN pk_product PRIMARY KEY (product_id)
+    CONSTRAINT ck_rating CHECK (rating >= 0 AND rating <= 5),
+    CONSTRAINT ck_salesrank CHECK (salesrank > 0)
+)       
