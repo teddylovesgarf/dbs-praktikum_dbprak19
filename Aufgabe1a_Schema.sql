@@ -21,13 +21,16 @@ CREATE TABLE mitwirkende_produkt(
     rolle mitwirkende_rolle PRIMARY KEY, 
 ); 
 
-CREATE TABLE produkt(
-    produkt_id VARCHAR(20) PRIMARY KEY, 
-    titel VARCHAR(200), 
-    typ produkt_typ, 
-    rating NUMERIC(3,2),     -- rating can be written as a percentage 00,00 to 100,00 
-    verkaufsrang INTEGER CHECK (verkaufsrang > 0),    
-    bild, -- store as url or path VARCHAR ? 
+ CREATE TABLE poduct(
+    product_id VARCHAR(50) NOT NULL PRIMARY KEY,
+    titel VARCHAR(255) NOT NULL,
+    rating NUMERIC(3,2),  --store as percentage [00,00 - 100,00] 
+    salesrank INTEGER,
+    picture VARCHAR(1000),
+    
+    CONSTRAIN pk_product PRIMARY KEY (product_id)
+    CONSTRAINT ck_rating CHECK (rating >= 0 AND rating <= 5),
+    CONSTRAINT ck_salesrank CHECK (salesrank > 0)       
 ); 
 
 CREATE TABLE verlag(
@@ -85,9 +88,9 @@ CREATE TABLE kunde (
     name VARCHAR(50) NOT NULL, 
 );
         
- Creat table poduct(
+ CREATE TABLE poduct(
     product_id VARCHAR(50) NOT NULL PRIMARY KEY,
-    tiel VARCHAR(255) NOT NULL,
+    titel VARCHAR(255) NOT NULL,
     rating INTEGER,
     salesrank INTEGER,
     picture VARCHAR(1000),
