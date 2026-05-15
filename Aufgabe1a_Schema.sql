@@ -142,7 +142,7 @@ CREATE TABLE dvd(
     product_id VARCHAR(50) NOT NULL,
     format VARCHAR(100),
     runtime_minutes INTEGER,
-    region_code VARCHAR(50) ,
+    region_code INTEGER(BETWEEN 0 AND 8),  --dvd codes gehen von 1 bis 8 
 
     CONSTRAINT pk_dvd
         PRIMARY KEY (product_id),
@@ -258,7 +258,7 @@ CREATE TABLE cartposition (
 
 
 CREATE TABLE review (
-    review_id       VARCHAR(50)   NOT NULL,
+    review_id       SERIAL   NOT NULL,
     customer_id     INTEGER       NOT NULL,
     product_id      VARCHAR(50)   NOT NULL,
     rating          INTEGER       NOT NULL,
