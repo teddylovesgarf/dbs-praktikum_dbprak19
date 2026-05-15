@@ -32,9 +32,45 @@ CREATE TABLE product(
         CHECK (salesrank IS NULL OR salesrank > 0)
 );  
 
+CREATE TABLE product_category (
+    product_id  VARCHAR(50) NOT NULL,
+    category_id INTEGER NOT NULL,
+
+    CONSTRAINT pk_product_category
+        PRIMARY KEY (product_id, category_id),
+
+    CONSTRAINT fk_product_category_product
+        FOREIGN KEY (product_id)
+        REFERENCES product (product_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_product_category_category
+        FOREIGN KEY (category_id)
+        REFERENCES category (category_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE similar_products (
+    product_id         VARCHAR(50) NOT NULL,
+    similar_product_id VARCHAR(50) NOT NULL,
+
+    CONSTRAINT pk_similar_products
+        PRIMARY KEY (product_id, similar_product_id),
+    
+    CONSTRAINT fk_similar_origin
+        FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE CASCADE,
+        
+    CONSTRAINT fk_similar_target
+        FOREIGN KEY (similar_product_id) REFERENCES product (product_id) ON DELETE CASCADE,
+        
+    CONSTRAINT ck_not_self_similar
+        CHECK (product_id != similar_product_id)
+
 --Mitwirkinde
 CREATE TABLE contributor(
-    contributor_id      INTEGER  NOT NULL, 
+    contributor_id      SERIAL  NOT NULL, 
     contributor_name    VARCHAR(200) NOT NULL,
 
     CONSTRAINT pk_contributor 
@@ -63,7 +99,7 @@ CREATE TABLE contributor_product(
         FOREIGN KEY (contributor_id)
         REFERENCES contributor (contributor_id)
         ON UPDATE CASCADE
-        ON DELETE RESTRICT,
+        ON DELETE RESTRICT
 ); 
 
 --Verlag
@@ -96,7 +132,7 @@ CREATE TABLE book(
         FOREIGN KEY (publisher_id)
         REFERENCES publisher (publisher_id)
         ON UPDATE CASCADE
-        ON DELETE RESTRICT,
+        ON DELETE RESTRICT
 ); 
 
 
@@ -142,7 +178,8 @@ CREATE TABLE dvd(
     product_id VARCHAR(50) NOT NULL,
     format VARCHAR(100),
     runtime_minutes INTEGER,
-    region_code INTEGER(BETWEEN 0 AND 8),  --dvd codes gehen von 1 bis 8 
+    region_code INTEGER,
+    CONSTRAINT ck_dvd_region CHECK(BETWEEN 8 AND 0)   --dvd codes gehen von 1 bis 8 
 
     CONSTRAINT pk_dvd
         PRIMARY KEY (product_id),
@@ -283,3 +320,10 @@ CREATE TABLE review (
     CONSTRAINT chk_review_rating
         CHECK (rating BETWEEN 1 AND 5)
 );
+
+
+
+
+-- was sucht man besonders häufig was nicht als PK gespeichert ist?
+-- filtern nach produkttyp (dvd, cd, buch)
+-- 
