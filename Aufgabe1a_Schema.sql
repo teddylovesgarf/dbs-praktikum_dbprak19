@@ -64,7 +64,7 @@ CREATE TABLE similar_products (
         
     CONSTRAINT fk_similar_target
         FOREIGN KEY (similar_product_id) REFERENCES product (product_id) ON DELETE CASCADE,
-        
+
     CONSTRAINT ck_not_self_similar
         CHECK (product_id != similar_product_id)
 
@@ -179,9 +179,9 @@ CREATE TABLE dvd(
     format VARCHAR(100),
     runtime_minutes INTEGER,
     region_code INTEGER,
-    CONSTRAINT ck_dvd_region CHECK(BETWEEN 8 AND 0)   --dvd codes gehen von 1 bis 8 
+    CONSTRAINT ck_dvd_region CHECK(region_code BETWEEN 0 AND 8)   --dvd codes gehen von 1 bis 8 
 
-    CONSTRAINT pk_dvd
+    CONSTRAINT pk_dvd,
         PRIMARY KEY (product_id),
 
       CONSTRAINT fk_dvd_product
@@ -325,5 +325,21 @@ CREATE TABLE review (
 
 
 -- was sucht man besonders häufig was nicht als PK gespeichert ist?
--- filtern nach produkttyp (dvd, cd, buch)
--- 
+-- filtern nach produkttyp (dvd, cd, buch), filtern nach produktkategorie z.B. pop-cd, filtern nach 
+-- bücher rausgegeben von xy verlag, oder cd küsntler,  filtern nach preis/angebot, filtern nach bewertung, verügbarkeit in einer filiale, 
+--
+
+CREATE INDEX idx_product_type ON product(product_type); --filtern nach produkttyp 
+CREATE INDEX idx_review_rating ON review(rating); --filtern nach bewertung 
+CREATE INDEX idx_offer_price ON offer(price); --filtern nach angebot/preis
+CREATE INDEX idx_publisher_name ON publisher(publisher_name); --filtern nach verlagsnamen
+CREATE INDEX idx_prod_cat_id ON product_category(category_id); --filtern nach kategorie
+CREATE INDEX idx_category_parent ON category(parent_category_id); --schneller finden was ist unterkategorie, was oberk
+
+CREATE INDEX idx_fk_cont_prod_cont   ON contributor_product(contributor_id);  -- wer zu welchen produkt beigetragen hat 
+CREATE INDEX idx_fk_book_publisher   ON book(publisher_id); --welcher verlag welches buch published
+CREATE INDEX idx_fk_offer_store      ON offer(store_id); --welche läden haben angebote
+CREATE INDEX idx_fk_cart_customer    ON cart(customer_id); --welcher cart gehört zu welchem customer
+CREATE INDEX idx_fk_review_customer  ON review(customer_id); -- welcher customer hat welche rezension hinterlassen
+CREATE INDEX idx_fk_review_product   ON review(product_id); -- welches produkt hat welche rezension 
+
