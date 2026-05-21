@@ -1,4 +1,4 @@
-package main;
+package main.db;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class SQLConnection {
+public class DBConnection {
     public static void main(String[] args) {
         Properties config = new Properties();
 
