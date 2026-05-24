@@ -117,7 +117,20 @@ public class StoreLoader {
             );
         }
     }
+<<<<<<< HEAD
 }
 
    
         
+=======
+        */
+
+private String emptyToNull(String text) {
+        if (text == null || text.isBlank()) {
+            return null;
+        }
+        return text.trim();
+    }
+
+}
+>>>>>>> da20e68bb8e2a3799760f1cd2f5ccfcbf5284653

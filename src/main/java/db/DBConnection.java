@@ -8,15 +8,15 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnection {
-    public static void main(String[] args) {
+    public static Connection getConnection() {
+        
         Properties config = new Properties();
 
           try {
             config.load(new FileInputStream("config.properties"));
           } catch (IOException e) {
-            System.err.println("Config Datei nicht gefunden:" + e.getMessage());
-            return;
-          
+            System.err.println("Config file not found:" + e.getMessage());
+            return null;
         }
 
         String url = config.getProperty("db.url");
@@ -24,18 +24,23 @@ public class DBConnection {
         String password = config.getProperty("db.password");
 
         try {
+           
+
             Connection conn = DriverManager.getConnection(url, user, password); 
             if (conn != null) {
-                System.out.println("Erfolgreich mit der Datenbank verbunden.");
-                conn.close();
-
+                System.out.println("Sucessfully connected to database.");
+                
             }
-        } catch (SQLException e) {
-            System.out.println("Verbindung fehlgeschlagen:" + e.getMessage());
-            
-    }
 
-}
+            return conn; 
+
+        } catch (SQLException e) {
+            System.out.println("Connection failed:" + e.getMessage());
+            return null;
+            
+        }
+    
+    }
 }
 
 
