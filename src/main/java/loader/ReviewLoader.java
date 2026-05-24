@@ -259,8 +259,6 @@ public class ReviewLoader {
 
         return summary + "\n\n" + content;
     }
-<<<<<<< HEAD
-=======
 
  private String emptyToNull(String text) {
         if (text == null || text.isBlank()) {
@@ -270,19 +268,7 @@ public class ReviewLoader {
     }                                           //habe die Hilfsmethode hier eingefügt, weil die noch bei dir nicht deklariert war. 
 
 }
->>>>>>> da20e68bb8e2a3799760f1cd2f5ccfcbf5284653
 
-    private String emptyToNull(String value) {
-        if (value == null || value.isBlank()) {
-            return null;
-        }
 
-        return value.trim();
-<<<<<<< HEAD
-    }
-}
-=======
-    }*/
     
        
->>>>>>> da20e68bb8e2a3799760f1cd2f5ccfcbf5284653

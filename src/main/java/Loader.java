@@ -26,6 +26,7 @@ public class Loader {
             // 4. Kategorienbaum einlesen
             System.out.println("Lade Kategoriestruktur...");
             CategoryLoader.load("categories.xml", conn);
+            System.out.println("Arbeitsverzeichnis: " + System.getProperty("user.dir"));
 
             // 5. CSV-Reviews einlesen (Objekt erzeugen, da kein statischer Aufruf)
             System.out.println("Lade Kunden-Reviews...");
