@@ -1,11 +1,10 @@
 import db.DBConnection;
 import error.ErrorLogger;
+import java.sql.Connection;
+import java.sql.SQLException;
 import loader.CategoryLoader;
 import loader.ProductLoader;
 import loader.ReviewLoader;
-
-import java.sql.Connection;
-import java.sql.SQLException;
 
 public class Loader {
 
