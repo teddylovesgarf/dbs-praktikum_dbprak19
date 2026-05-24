@@ -75,13 +75,14 @@ public class ProductLoader {
         // pgroup → product_type umwandeln
         String dbProductType;
         switch (pgroup.toLowerCase()) {
-            case "book":  dbProductType = "book"; break;
-            case "music": dbProductType = "music_cd"; break;
-            case "dvd":   dbProductType = "dvd"; break;
-            default:
-                ErrorLogger.logError(filePath, itemIndex, "product", "product_type",
-                    pgroup, "Typfehler", "Ungültige pgroup: " + pgroup + " bei ASIN: " + asin);
-                return;
+             case "book":    
+        case "buch":        dbProductType = "book"; break;
+        case "music":   
+        case "musical":     dbProductType = "music_cd"; break;
+        case "dvd":         dbProductType = "dvd"; break;
+        default:
+
+        return;
         }
 
         // salesrank prüfen und konvertieren
