@@ -124,4 +124,12 @@ public class StoreLoader {
         return value.trim();
     }
         */
+
+private String emptyToNull(String text) {
+        if (text == null || text.isBlank()) {
+            return null;
+        }
+        return text.trim();
+    }
+
 }

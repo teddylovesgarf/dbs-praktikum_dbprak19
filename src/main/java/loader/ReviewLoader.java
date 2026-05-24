@@ -257,6 +257,14 @@ public class ReviewLoader {
 
         return summary + "\n\n" + content;
     }
+
+ private String emptyToNull(String text) {
+        if (text == null || text.isBlank()) {
+            return null;
+        }
+        return text.trim();
+    }                                           //habe die Hilfsmethode hier eingefügt, weil die noch bei dir nicht deklariert war. 
+
 }
 
     //Hilfsmethode, die leere Strings in null umwandelt. Wenn der übergebene String null oder nur aus Leerzeichen besteht, wird null zurückgegeben. Ansonsten wird der String getrimmt zurückgegeben.
@@ -268,3 +276,4 @@ public class ReviewLoader {
         return value.trim();
     }*/
     
+       

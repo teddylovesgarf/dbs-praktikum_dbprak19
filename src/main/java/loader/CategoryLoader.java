@@ -9,7 +9,6 @@ import parser.XMLParser;
 
 public class CategoryLoader {
 
-
     public static void load(String filePath, Connection conn) {
         Document doc = XMLParser.parse(filePath);
         if (doc == null) {
