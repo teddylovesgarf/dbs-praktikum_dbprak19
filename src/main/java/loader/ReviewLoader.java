@@ -50,36 +50,22 @@ public class ReviewLoader {
 
                 } catch (IllegalArgumentException e) {
                     ErrorLogger.logError(
-                            filePath,
-                            lineNumber,
-                            "review",
-                            String.join(",", row),
-                            "Validierungsfehler",
-                            e.getMessage()
-                    );
+                            filePath, lineNumber, "review", "unbekannt",
+    String.join(",", row), "Validierungsfehler", e.getMessage()
+);
 
                 } catch (SQLException e) {
-                    ErrorLogger.logError(
-                            filePath,
-                            lineNumber,
-                            "review",
-                            String.join(",", row),
-                            "Datenbankfehler",
-                            e.getMessage()
-                    );
+                    ErrorLogger.logError(filePath, lineNumber, "review", "unbekannt",
+    String.join(",", row), "Datenbankfehler", e.getMessage()
+);
                 }
 
                 lineNumber++;
             }
 
         } catch (IOException e) {
-            ErrorLogger.logError(
-                    filePath,
-                    0,
-                    "review",
-                    "",
-                    "Dateifehler",
-                    "Datei konnte nicht gelesen werden: " + e.getMessage()
+            ErrorLogger.logError(filePath, 0, "review", "file",
+    "", "Dateifehler", "Datei konnte nicht gelesen werden: " + e.getMessage()
             );
         }
     }
@@ -116,14 +102,13 @@ public class ReviewLoader {
         if (rating < 1 || rating > 5) {
             throw new IllegalArgumentException("rating muss zwischen 1 und 5 liegen");
         }
-        if (helpful !=null && !helpfulRaw.isBlank()){
-            int helpful;
-            try{
-                helpful =Integer.parseInt(helpfulRaw.trim());
-            }catch (NumberFormatException e) {
-                throw new IllegalArgumentException("helpful ist keine ganze Zahl");
-            }
-        }
+        if (helpfulRaw != null && !helpfulRaw.isBlank()) {
+    try {
+        int helpful = Integer.parseInt(helpfulRaw.trim());
+    } catch (NumberFormatException e) {
+        throw new IllegalArgumentException("helpful ist keine ganze Zahl");
+    }
+}
 
         if (reviewDateRaw == null || reviewDateRaw.isBlank()) {
             throw new IllegalArgumentException("reviewdate fehlt");
