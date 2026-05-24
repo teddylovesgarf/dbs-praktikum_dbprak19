@@ -26,7 +26,7 @@ public class ProductLoader {
         }
 
         try {
-            conn.setAutoCommit(false);
+            conn.setAutoCommit(true);
 
             // Store laden und ID merken
             int storeId = insertStore(shop, conn, filePath);
@@ -38,11 +38,10 @@ public class ProductLoader {
                 processItem(item, storeId, conn, filePath, i + 1);
             }
 
-            conn.commit();
+            
             System.out.println("Datei " + filePath + " erfolgreich geladen.");
 
         } catch (SQLException e) {
-            try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
             ErrorLogger.logError(filePath, 0, "database", "transaction",
                 "TRANSACTION_BLOCK", "Constraint-Fehler", "Rollback: " + e.getMessage());
         }
