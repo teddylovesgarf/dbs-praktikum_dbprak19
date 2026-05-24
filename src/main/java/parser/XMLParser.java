@@ -30,7 +30,7 @@ public class XMLParser {
     }
 
     // Gibt den Textwert eines Kind-Elements zurück
-    // z.B. getChildText(item, "title") → "In a Pig's Eye"
+    // z.B. getChildText(item, "title")
     // Gibt null zurück wenn Element nicht existiert
     
     public static String getChildText(Element parent, String tagName) {

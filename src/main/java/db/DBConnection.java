@@ -26,12 +26,12 @@ public class DBConnection {
         try {
             Connection conn = DriverManager.getConnection(url, user, password); 
             if (conn != null) {
-                System.out.println("Successfully connected to the database");
+                System.out.println("Erfolgreich mit der Datenbank verbunden.");
                 conn.close();
 
             }
         } catch (SQLException e) {
-            System.out.println("Connection failed" + e.getMessage());
+            System.out.println("Verbindung fehlgeschlagen:" + e.getMessage());
             
     }
 
