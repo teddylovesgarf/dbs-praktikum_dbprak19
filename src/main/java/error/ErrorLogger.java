@@ -105,9 +105,20 @@ public class ErrorLogger {
         System.out.println("-----------------------------");
         System.out.println("Gesamt abgelehnt: " + totalRejected);
         System.out.println("Gesamt geladen:   " + totalLoaded);
+        try (PrintWriter out = new PrintWriter(new FileWriter(FILE_PATH, true))) {
+        out.println();
+        out.println("=== Import Zusammenfassung ===");
+
+        for (Map.Entry<String, Integer> entry : errorCategoryCounts.entrySet()) {
+            out.printf("%-25s %d%n", entry.getKey() + ":", entry.getValue());
+        }
+
+        out.println("-----------------------------");
+        out.println("Gesamt abgelehnt: " + totalRejected);
+        out.println("Gesamt geladen:   " + totalLoaded);
+
+    } catch (IOException e) {
+        System.err.println("Fehler beim Schreiben der Zusammenfassung ins Fehlerprotokoll: " + e.getMessage());
+    }
     }
 }
-
-// Statistik soll in Error Log Datei mitrein kommen 
-// Diese Version hochladen 
-// Wie am besten Code hochladengit 

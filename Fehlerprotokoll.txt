@@ -2109,3 +2109,11 @@ ERROR | Datei: dresden.xml | Zeile: 2633 | Attribut: artist | Entität: music_cd
 ERROR | Datei: reviews.csv | Zeile: 50 | Attribut: unbekannt | Entität: review | Fehlerart: Validierungsfehler | Grund: Produkt mit product_id B?0000IX6O existiert nicht | Datensatz: B?0000IX6O,5,0,2005-11-06,gottlos1977,Himmlisch,Mit diesesr CD fühlt man sicj ins 12 Jahrhundert zurück versetzt. Eine sehr schöne Stimme bringt Minneliedern das Leben zurück. Sehr gut finde ich auch die übersetztung der texte in englische im Booklet.
 ERROR | Datei: reviews.csv | Zeile: 2535 | Attribut: unbekannt | Entität: review | Fehlerart: Validierungsfehler | Grund: rating muss zwischen 1 und 5 liegen | Datensatz: B00006FXVN,6,4,2004-03-21,mhenatsch,Absolut empfehlenswert!,Diese Kollektion gehoert zu dem Besten in meiner CD-Sammlung. Die Aufnahmequalitaet ist tadellos, die Auswahl der Stuecke breit gefaechert und sehr gut geordnet.&lt;P&gt;Ich kann sie immer wieder anhoeren.&lt;BR&gt;Michael Henatsch
 ERROR | Datei: reviews.csv | Zeile: 5274 | Attribut: unbekannt | Entität: review | Fehlerart: Validierungsfehler | Grund: Produkt mit product_id B0006440PO6 existiert nicht | Datensatz: B0006440PO6,3,2,2005-02-23,istnichtwichtig,Performance top, Technik flop,Ich habe die DVD blind gekauft, als sie ganz neu rauskam, weil ich Eros Ramazotti mag. Die technische Umsetzung auf der DVD ist aber mehr als enttäuschend. Die Surroundton-Qualität (DTS) ist unter aller Kanone. Der Stereo-Ton ist da schon wesentlich besser. Insgesamt fast so schlecht wie &quot;Divas Live 99&quot;, das leider ein weiteres Beispiel für die schlechte Tontechnik darstellt. Die Stimme von Eros ist zu laut abgemischt, sodass die Instrumente &quot;nur im Hintergrund&quot; klingen. Das stört auf die Dauer. Die Konzertstimmung und die gute Laune der Musiker und der Zuhörer/Zuschauer kommt aber gut rüber.&lt;P&gt;Fazit: Für Fans sicher ein Muss.
+
+=== Import Zusammenfassung ===
+NULL-Fehler:              2
+Constraint-Fehler:        2105
+Validierungsfehler:       3
+-----------------------------
+Gesamt abgelehnt: 2110
+Gesamt geladen:   9675
