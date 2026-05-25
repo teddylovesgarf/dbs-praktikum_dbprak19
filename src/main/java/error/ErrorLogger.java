@@ -107,3 +107,7 @@ public class ErrorLogger {
         System.out.println("Gesamt geladen:   " + totalLoaded);
     }
 }
+
+// Statistik soll in Error Log Datei mitrein kommen 
+// Diese Version hochladen 
+// Wie am besten Code hochladengit 
