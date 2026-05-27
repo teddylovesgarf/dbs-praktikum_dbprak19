@@ -3,7 +3,7 @@ import error.ErrorLogger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import loader.CategoryLoader;
-import loader.ProductLoader;
+import loader.Product_and_StoreLoader;
 import loader.ReviewLoader;
 
 public class Loader {
@@ -19,8 +19,8 @@ public class Loader {
             
             // 3. XML-Daten für Leipzig und Dresden laden (ProductLoader lädt auch Store Details mit)
             System.out.println("Lade Produktdaten (Leipzig & Dresden)...");
-            ProductLoader.load("leipzig_transformed.xml", conn);
-            ProductLoader.load("dresden.xml", conn);
+            Product_and_StoreLoader.load("leipzig_transformed.xml", conn);
+            Product_and_StoreLoader.load("dresden.xml", conn);
 
             // 4. Kategorienbaum einlesen
             System.out.println("Lade Kategoriestruktur...");

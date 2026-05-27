@@ -5,7 +5,7 @@ import java.sql.*;
 import org.w3c.dom.*;
 import parser.XMLParser;
 
-public class ProductLoader {
+public class Product_and_StoreLoader {
 
     // Hauptmethode; wird dann von Loader.java aufgerufen
     public static void load(String filePath, Connection conn) {
