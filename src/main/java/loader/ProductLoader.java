@@ -7,9 +7,7 @@ import parser.XMLParser;
 
 public class ProductLoader {
 
-    // ============================================================
-    // Hauptmethode — wird von Loader.java aufgerufen
-    // ============================================================
+    // Hauptmethode; wird dann von Loader.java aufgerufen
     public static void load(String filePath, Connection conn) {
         Document doc = XMLParser.parse(filePath);
         if (doc == null) {
@@ -47,9 +45,8 @@ public class ProductLoader {
         }
     }
 
-    // ============================================================
+    
     // Verarbeitet ein einzelnes <item> Element
-    // ============================================================
     private static void processItem(Element item, int storeId, Connection conn,
                                     String filePath, int itemIndex) {
         String asin        = item.getAttribute("asin").trim();
@@ -64,14 +61,14 @@ public class ProductLoader {
             title = titleNode.item(0).getTextContent().trim();
         }
 
-        // Konsistenzprüfung: asin Pflichtfeld
+        // Konsistenzprüfung - asin Pflichtfeld
         if (asin.isEmpty()) {
             ErrorLogger.logError(filePath, itemIndex, "product", "product_id",
                 "", "NULL-Fehler", "asin ist leer");
             return;
         }
 
-        // pgroup → product_type umwandeln
+        // pgroup -> product_type umwandeln
         String dbProductType;
         switch (pgroup.toLowerCase()) {
              case "book":    
@@ -139,9 +136,7 @@ public class ProductLoader {
         insertOffer(item, asin, storeId, conn, filePath, itemIndex);
     }
 
-    // ============================================================
-    // Lädt Store-Informationen aus <shop> Attributen
-    // ============================================================
+    // Lädt Store Informationen aus <shop> Attributen
     private static int insertStore(Element shop, Connection conn, String filePath) {
         String name   = shop.getAttribute("name").trim();
         String street = shop.getAttribute("street").trim();
@@ -170,9 +165,9 @@ public class ProductLoader {
         return 0;
     }
 
-    // ============================================================
+
     // Lädt ein Buch und seine Abhängigkeiten
-    // ============================================================
+
     private static void insertBook(Element item, String productId, Connection conn,
                                    String filePath, int itemIndex) {
         // bookspec Element holen
@@ -188,7 +183,7 @@ public class ProductLoader {
             if (isbn.isEmpty()) isbn = null;
         }
 
-        // pages → Textinhalt von <pages>
+        // pages -> Textinhalt von <pages>
         Integer pages = null;
         String pagesStr = XMLParser.getChildText(bookspec, "pages");
         if (pagesStr != null) {
@@ -200,7 +195,7 @@ public class ProductLoader {
             }
         }
 
-        // publication_date → Attribut "date" von <publication>
+        // publication_date -> Attribut "date" von <publication>
         java.sql.Date pubDate = null;
         NodeList pubList = bookspec.getElementsByTagName("publication");
         if (pubList.getLength() > 0) {
@@ -215,7 +210,7 @@ public class ProductLoader {
             }
         }
 
-        // publisher → Attribut "name" von erstem <publisher>
+        // publisher -> Attribut "name" von erstem <publisher>
         String publisherName = null;
         NodeList pubNameList = item.getElementsByTagName("publisher");
         if (pubNameList.getLength() > 0) {
@@ -250,9 +245,8 @@ public class ProductLoader {
         }
     }
 
-    // ============================================================
+    
     // Lädt eine MusicCD und ihre Abhängigkeiten
-    // ============================================================
     private static void insertMusicCD(Element item, String productId, Connection conn,
                                       String filePath, int itemIndex) {
         // label holen
@@ -275,7 +269,7 @@ public class ProductLoader {
             }
         }
 
-        // Künstler prüfen — mindestens einer erforderlich!
+        // Künstler prüfen; mindestens einer erforderlich
         NodeList artists = item.getElementsByTagName("artist");
         if (artists.getLength() == 0) {
             ErrorLogger.logError(filePath, itemIndex, "music_cd", "artist",
@@ -308,9 +302,9 @@ public class ProductLoader {
         }
     }
 
-    // ============================================================
+    
     // Lädt eine DVD und ihre Abhängigkeiten
-    // ============================================================
+    
     private static void insertDVD(Element item, String productId, Connection conn,
                                    String filePath, int itemIndex) {
         // format, runtime, region_code holen
@@ -384,9 +378,9 @@ public class ProductLoader {
         }
     }
 
-    // ============================================================
+    
     // Lädt einen Publisher und gibt seine ID zurück
-    // ============================================================
+
     private static Integer insertPublisher(String name, Connection conn,
                                            String filePath, int itemIndex) {
         if (name == null || name.isEmpty()) return null;
@@ -412,9 +406,8 @@ public class ProductLoader {
         return null;
     }
 
-    // ============================================================
     // Lädt einen Contributor und verknüpft ihn mit dem Produkt
-    // ============================================================
+
     private static void insertContributor(String name, String productId,
                                           String rolle, Connection conn) {
         if (name == null || name.isEmpty()) return;
@@ -450,9 +443,9 @@ public class ProductLoader {
         } catch (SQLException ignored) {}
     }
 
-    // ============================================================
+   
     // Lädt alle Tracks einer CD
-    // ============================================================
+    
     private static void insertTracks(Element item, String productId, Connection conn) {
         NodeList tracksList = item.getElementsByTagName("tracks");
         if (tracksList.getLength() == 0) return;
@@ -475,9 +468,8 @@ public class ProductLoader {
         }
     }
 
-    // ============================================================
+    
     // Lädt ähnliche Produkte
-    // ============================================================
     private static void insertSimilarProducts(Element item, String productId,
                                               Connection conn, String filePath, int itemIndex) {
         NodeList sims = item.getElementsByTagName("sim_product");
@@ -505,9 +497,9 @@ public class ProductLoader {
         }
     }
 
-    // ============================================================
+    
     // Lädt das Angebot eines Produkts in einer Filiale
-    // ============================================================
+
     private static void insertOffer(Element item, String productId, int storeId, Connection conn, String filePath, int itemIndex) {
         NodeList priceNodes = item.getElementsByTagName("price");
         if (priceNodes.getLength() == 0) return;
@@ -551,9 +543,8 @@ public class ProductLoader {
         }
     }
 
-    // ============================================================
-    // Hilfsmethode — prüft ob ein Produkt in der DB existiert
-    // ============================================================
+    
+    // Hilfsmethode; prüft ob ein Produkt in der DB existiert
     private static boolean productExists(String asin, Connection conn) {
         try (PreparedStatement stmt = conn.prepareStatement(
                 "SELECT 1 FROM product WHERE product_id = ?")) {
