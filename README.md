@@ -13,7 +13,8 @@ Um dieses Projekt ausführen zu können, muss man folgende Schritte ausführen:
                                  db.password = dein_passwort
 4. Main Loader ausführen.
 
-5. Ergebnisse sollten folgende sein: 
+5. Ergebnisse sollten folgende sein:
+   
 === Import Zusammenfassung ===
 NULL-Fehler:              2
 Constraint-Fehler:        2105
