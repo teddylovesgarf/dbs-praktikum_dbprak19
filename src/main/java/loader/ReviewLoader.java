@@ -182,7 +182,7 @@ public class ReviewLoader {
         }
     }
 
-    /*Sucht */
+    //Sucht 
     private int findOrCreateCustomer(String customerName) throws SQLException {
         Integer existingCustomerId = findCustomerId(customerName);
 

@@ -8,6 +8,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import parser.XMLParser;
 
+//Diese Klasse wurde letztendlich nicht benutzt, da die Lädeninformationen zusammen mit den Produkten in einer XML Datei sind und es einfacher
+// war die Läden über den ProductLoader einzulesen. Wir behalten sie trotzdem drin, für den hypothetischen Fall, dass Filialen dazukommen, die 
+// getrennt von ihrem Angebot, Attribute wie Straße usw. in einer XML Datei besitzen.
+
 
 /*Ablauf
 1.XML Datei parsen
