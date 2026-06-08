@@ -33,7 +33,7 @@ public class XMLParser {
     }
 
     // Gibt den Textwert eines Kind-Elements zurück
-    // z.B. getChildText(item, "title")
+    // zB. getChildText(item, "title")
     // Gibt null zurück wenn Element nicht existiert
     
     public static String getChildText(Element parent, String tagName) {
@@ -48,7 +48,7 @@ public class XMLParser {
 
    
     // Gibt den Wert eines Attributs zurück
-    // z.B. getAttribute(item, "asin") → "B0000668PG"
+    // zB. getAttribute(item, "asin") = "B0000668PG"
     // Gibt null zurück wenn Attribut leer ist
    
     public static String getAttribute(Element element, String attributeName) {
@@ -58,7 +58,7 @@ public class XMLParser {
 
     
     // Gibt alle direkten Kind-Elemente mit einem bestimmten Tag zurück
-    // z.B. getChildren(labels, "label") → Liste aller <label> Elemente
+    // zB. getChildren(labels, "label") = Liste aller <label> Elemente
    
     public static List<Element> getChildren(Element parent, String tagName) {
         List<Element> result = new ArrayList<>();
@@ -74,14 +74,13 @@ public class XMLParser {
 
     
     // Gibt alle <item> Elemente einer Shop-XML zurück
-    // z.B. für leipzig_transformed.xml
     
     public static NodeList getItems(Document doc) {
         return doc.getElementsByTagName("item");
     }
 
     // Gibt das Root-Element einer XML zurück
-    // z.B. <shop> oder <categories>
+    // zB. <shop> oder <categories>
     
     public static Element getRoot(Document doc) {
         return doc.getDocumentElement();

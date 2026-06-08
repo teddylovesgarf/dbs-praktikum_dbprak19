@@ -191,7 +191,11 @@ public class ReviewLoader {
         }
     }
 
+<<<<<<< HEAD
     /*Diese Methode sucht zuerst, ob der Kunde bereits existiert. Falls nicht, wird er neu angelegt. */
+=======
+    //Sucht 
+>>>>>>> 952fc08b77bfebb8a58136d520b625ee04d94820
     private int findOrCreateCustomer(String customerName) throws SQLException {
         Integer existingCustomerId = findCustomerId(customerName);
 

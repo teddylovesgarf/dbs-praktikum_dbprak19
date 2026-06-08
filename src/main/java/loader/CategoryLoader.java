@@ -36,7 +36,7 @@ public class CategoryLoader {
             if (child.getTagName().equals("category")) {
                 String name = getDirectText(child);
 
-                // ── Konsistenzprüfung ──────────────────────────
+                //Konsistenzprüfung
                 if (name == null || name.isEmpty()) {
                     ErrorLogger.logError("categories.xml", 0, "category", "category_name",
             "", "NULL-Fehler", "Category name is empty");
@@ -55,7 +55,7 @@ public class CategoryLoader {
                 // Produkt mit Kategorie verknüpfen
                 String productId = child.getTextContent().trim();
 
-                // ── Konsistenzprüfung ──────────────────────────
+                // Konsistenzprüfung 
                 if (productId.isEmpty()) {
                     ErrorLogger.logError("categories.xml", 0, "category", "category_name",
             "", "NULL-Fehler", "Product ID is empty");
@@ -66,11 +66,9 @@ public class CategoryLoader {
             }
         }
     }
-
-    // ============================================================
-    // Fügt Kategorie ein oder gibt ID zurück wenn sie schon existiert
-    // → löst das Duplikat-Problem
-    // ============================================================
+    
+    // Fügt Kategorie ein oder gibt ID zurück wenn sie schon existiert +  löst das Duplikat-Problem
+    
     private static Integer insertOrGetCategory(String name, Integer parentId, Connection conn) {
         // Erst prüfen ob Kategorie schon existiert (gleicher Name + gleicher Parent)
         String checkSql = "SELECT category_id FROM category WHERE category_name = ? AND parent_category_id IS NOT DISTINCT FROM ?";
@@ -83,7 +81,7 @@ public class CategoryLoader {
             }
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                // Existiert schon → ID zurückgeben, nicht nochmal einfügen
+                // Existiert schon -> ID zurückgeben, nicht nochmal einfügen
                 return rs.getInt("category_id");
             }
         } catch (SQLException e) {
@@ -94,7 +92,7 @@ public class CategoryLoader {
             return null;
         }
 
-        // Existiert nicht → neu einfügen
+        // Existiert nicht -> neu einfügen
         String insertSql = "INSERT INTO category (category_name, parent_category_id) VALUES (?, ?) RETURNING category_id";
         try (PreparedStatement stmt = conn.prepareStatement(insertSql)) {
             stmt.setString(1, name);
@@ -115,7 +113,7 @@ public class CategoryLoader {
         return null;
     }
 
-    // ============================================================
+    
     // Verknüpft ein Produkt mit einer Kategorie
     // Ignoriert wenn Produkt noch nicht in DB existiert
 
@@ -128,7 +126,7 @@ public class CategoryLoader {
             stmt.setString(1, productId);
             ResultSet rs = stmt.executeQuery();
             if (!rs.next()) {
-                // Produkt existiert noch nicht → überspringen
+                // Produkt existiert noch nicht -> überspringen
                 // (wird später vom ProductLoader geladen)
                 return;
             }
@@ -163,10 +161,10 @@ public class CategoryLoader {
         }
     }
 
-    // ============================================================
+    
     // Holt nur den direkten Textinhalt eines Elements
     // ohne den Text der Kindelemente
-    // ============================================================
+   
     private static String getDirectText(Element element) {
         StringBuilder text = new StringBuilder();
         NodeList children = element.getChildNodes();
