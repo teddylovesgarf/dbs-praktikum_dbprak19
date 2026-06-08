@@ -238,7 +238,8 @@ CREATE TABLE store (
     price         DECIMAL(10,2),
     condition     VARCHAR(100),
     currency      VARCHAR(10),
-
+-- sobald es für ein shop angeboten wird, ist es fest und kann nicht auf andere shops erweitert werden
+-- künstlicher Schlüssel? Preis? 
     CONSTRAINT pk_offer
         PRIMARY KEY (product_id, store_id),
 
