@@ -3,7 +3,7 @@
 ```sql
 -- Anfrage 1
 SELECT
-    product_type AS typ,
+    product_type,
     COUNT(*) AS anzahl
 FROM product
 GROUP BY product_type
@@ -11,7 +11,7 @@ ORDER BY product_type;
 ```
 
 **Ergebnis:**
-| typ | anzahl | 
+| product_typ | anzahl | 
 |---|---:| 
 | book | 716 |  
 |music_cd| 1940|
@@ -52,23 +52,23 @@ ORDER BY product_type, average_rating DESC, product_id;
 ```
 
 **Ergebnis:**
-| typ | produktnr | rating |
+| product_type | product_id | average_rating |
 |---|---|---:|
-| book | 3125611881 | 5.00 |
-| book | 3257008767 | 5.00 |
-| book | 3401053698 | 5.00 |
-| book | 3405168643 | 5.00 |
+| book | 3125611881 | 5.0000000000000000 |
+| book | 3257008767 | 5.0000000000000000 |
+| book | 3401053698 | 5.0000000000000000 |
+| book | 3405168643 | 5.0000000000000000 |
 | book | 3407784570 | 5.00 |
-| music_cd | B0000007QD | 5.00 |
-| music_cd | B000006NXP | 5.00 |
-| music_cd | B000006YMN | 5.00 |
-| music_cd | B00000DG17 | 5.00 |
-| music_cd | B00000I92V | 5.00 |
-| dvd | 6304498977 | 5.00 |
-| dvd | 630463949X | 5.00 |
-| dvd | B00002ZMNV | 5.00 |
-| dvd | B00004RJEG | 5.00 |
-| dvd | B00004RYTK | 5.00 |
+| music_cd | B0000007QD | 5.0000000000000000 |
+| music_cd | B000006NXP | 5.0000000000000000 |
+| music_cd | B000006YMN | 5.0000000000000000 |
+| music_cd | B00000DG17 | 5.0000000000000000 |
+| music_cd | B00000I92V | 5.0000000000000000 |
+| dvd | 6304498977 | 5.0000000000000000 |
+| dvd | 630463949X | 5.0000000000000000 |
+| dvd | B00002ZMNV | 5.0000000000000000 |
+| dvd | B00004RJEG | 5.0000000000000000 |
+| dvd | B00004RYTK | 5.0000000000000000 |
 
 ``` sql
 --Anfrage 3
@@ -2695,3 +2695,51 @@ ORDER BY anzahl_reviews DESC, c.customer_name;
 | vspillner | 13 |
 | katja-lesemaus | 11 |
 | marccoll11 | 10 |
+
+```sql
+--Anfrage 9
+SELECT AVG(anzahl_title) AS average_titel_on_cd
+FROM(
+SELECT product_id, COUNT(*) AS anzahl_title
+FROM cd_title
+    GROUP BY product_id
+    ) AS titel_pro_cd;
+```
+
+**ERGEBNIS:**
+| average_titel_on_cd |
+|---:| 
+| 26.6195693779904306 |
+
+```sql
+--Anfrage 8
+SELECT DISTINCT a.contributor_name
+FROM contributor a
+JOIN contributor_product cp_book
+    ON a.contributor_id= cp_book.contributor_id
+    --alle Personen holen, die ein Eintrag in contributor_product haben
+    --Hier werden Mitwirkende mit ihren Produktbeteiligungen verbunden.
+JOIN product p_book
+    ON cp_book.product_id = p_book.product_id
+    -- Hier werden diese Produktbeteiligungen mit den Produktdaten verbunden, damit man den Produkttyp prüfen kann.
+JOIN contributor_product cp_dvd_music_contributor
+    ON a.contributor_id = cp_dvd_music_contributor.contributor_id
+-- a.contributor_id von oben wird mit allen seine/ihre Produktbeteiligungen verbunden
+JOIN product p_dvd_music
+    ON cp_dvd_music_contributor.product_id = p_dvd_music.product_id
+WHERE cp_book.rolle = 'Autor/in'
+    AND p_book.product_type = 'book'
+    AND p_dvd_music.product_type IN ('dvd', 'music_cd') --ODER Abfrage
+ORDER BY a.contributor_name;
+```
+
+|contributor_name|
+|---:| 
+| Al |
+| Dav |
+| Heino |
+| Jürgen |
+| Nicole |
+| Peter |
+|Sandra |
+| Va |
