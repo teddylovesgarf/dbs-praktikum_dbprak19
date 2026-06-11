@@ -3505,10 +3505,18 @@ HAVING COUNT(DISTINCT o.store_id) = (SELECT COUNT(*) FROM store);
 
 ### Ergebnis
 
-<details>
-<summary>Ergebnisliste anzeigen</summary>
 
-```text 
+
+<details>
+
+<summary> Ergebnisliste anzeigen </summary>
+
+
+
+```text
+
+
+
 product_id,"title"
 B000000UWU,"Best Loved Classics Vol. 3"
 B000000WMJ,"Sophie Tucker - Some of These"
@@ -3817,7 +3825,16 @@ B000BWPQZ6,"Il Divo - Encore"
 B000CAKWNS,"This Ain't Brain Surgery, But I'll Tell You What Is"
 B000CEZW6Q,"When I'M Gone (2-Track)"
 B000CFWGFK,"A Date with Shahrukh Khan"
-``` 
+
+...
+
+```
+
+</details>
+
+```
+
+
 
 
 
