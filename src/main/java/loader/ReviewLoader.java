@@ -11,6 +11,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import parser.CSVParser;
+/*ReviewLoader lädt Rezensionen aus der CSV-Datei. Zuerst wird jede Zeile validiert: 
+Spaltenanzahl, Pflichtfelder, Rating als Zahl zwischen 1 und 5, Helpful als Zahl und 
+Datum im Format yyyy-MM-dd. Danach wird geprüft, ob das Produkt existiert. 
+Der Kunde wird anhand des Usernamens gesucht oder neu angelegt. 
+Anschließend wird die Rezension mit einem PreparedStatement in die Tabelle review eingefügt. 
+Fehlerhafte Datensätze werden über den ErrorLogger mit Datei, Zeile, Entität, Fehlerart und Begründung protokolliert. 
+Besonders wichtig ist die relationenübergreifende Prüfung, dass eine Rezension nur für ein existierendes Produkt 
+geladen werden darf. */
 
 // * Die Klasse ReviewLoader lädt Rezensionen aus einer CSV Datei in die Datenbank.
 /*Erwartetes CSV Format:
@@ -69,6 +77,7 @@ public class ReviewLoader {
             );
         }
     }
+
     // Validiert die Daten einer Rezension. Überprüft die Anzahl der Spalten, die Gültigkeit von product_id, rating, reviewdate und user.
     private void validateReview(String[] row) {
         if (row.length < 7) {
@@ -182,7 +191,11 @@ public class ReviewLoader {
         }
     }
 
+<<<<<<< HEAD
+    /*Diese Methode sucht zuerst, ob der Kunde bereits existiert. Falls nicht, wird er neu angelegt. */
+=======
     //Sucht 
+>>>>>>> 952fc08b77bfebb8a58136d520b625ee04d94820
     private int findOrCreateCustomer(String customerName) throws SQLException {
         Integer existingCustomerId = findCustomerId(customerName);
 
@@ -209,6 +222,7 @@ public class ReviewLoader {
         throw new SQLException("customer_id konnte für customer_name nicht erzeugt werden: " + customerName);
     }
 
+    //Diese Methode sucht eine vorhandene Kundennummer anhand des Namens.
     private Integer findCustomerId(String customerName) throws SQLException {
         String sql = """
                 SELECT customer_id
