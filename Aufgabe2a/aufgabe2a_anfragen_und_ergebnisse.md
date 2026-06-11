@@ -3485,7 +3485,7 @@ B0001NNLQ6,"B00004S5QR"
 3791504606,"3791504517"
 B000AND9ZU,"B000ANDA18"
 B00004SAAX,"B00004SA8A"
-```
+</details> ```
 
 
 ## Frage 11: Welche Produkte werden in allen Filialen angeboten?
