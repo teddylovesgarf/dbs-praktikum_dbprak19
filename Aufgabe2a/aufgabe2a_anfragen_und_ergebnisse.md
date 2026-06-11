@@ -3491,8 +3491,6 @@ B00004SAAX,"B00004SA8A"
 
 </details>
 
-```
-
 
 ## Frage 11: Welche Produkte werden in allen Filialen angeboten?
 - Die Query muss für eine beliebige Anzahl von Filialen funktionieren.
