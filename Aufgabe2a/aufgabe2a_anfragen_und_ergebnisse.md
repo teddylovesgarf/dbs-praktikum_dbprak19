@@ -3486,6 +3486,7 @@ B0001NNLQ6,"B00004S5QR"
 B000AND9ZU,"B000ANDA18"
 B00004SAAX,"B00004SA8A"
 ```
+</details> 
 
 ## Frage 11: Welche Produkte werden in allen Filialen angeboten?
 - Die Query muss für eine beliebige Anzahl von Filialen funktionieren.
@@ -3814,6 +3815,7 @@ B000BWPQZ6,"Il Divo - Encore"
 B000CAKWNS,"This Ain't Brain Surgery, But I'll Tell You What Is"
 B000CEZW6Q,"When I'M Gone (2-Track)"
 B000CFWGFK,"A Date with Shahrukh Khan"
-```
+``` 
+
 
 
