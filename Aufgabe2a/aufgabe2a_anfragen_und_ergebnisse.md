@@ -2790,7 +2790,7 @@ WHERE ph2.category_id != ph.category_id;
 Zur besseren Lesbarkeit wird die Ergebnisliste eingeklappt dargestellt.
 
 <details>
-<summary> Ergebnisliste anzeigen </summary>
+<summary>Ergebnisliste anzeigen</summary>
 
 ```text 
 product_id,"similar_product_id"
@@ -3486,11 +3486,11 @@ B0001NNLQ6,"B00004S5QR"
 B000AND9ZU,"B000ANDA18"
 B00004SAAX,"B00004SA8A"
 ```
-</details> 
+
 
 ## Frage 11: Welche Produkte werden in allen Filialen angeboten?
 - Die Query muss für eine beliebige Anzahl von Filialen funktionieren.
-- Ein Produkt kann von derselben Filiale mehrfach angeboten werden 
+- Ein Produkt kann von derselben Filiale mehrfach angeboten werden (z. B. neu und gebraucht).
 
 ### SQL-Lösung
 
@@ -3500,11 +3500,12 @@ FROM offer o
 JOIN product p ON p.product_id = o.product_id
 GROUP BY p.product_id, p.title
 HAVING COUNT(DISTINCT o.store_id) = (SELECT COUNT(*) FROM store);
+```
 
-Zur besseren Lesbarkeit wird die Ergebnisliste eingeklappt dargestellt.
+### Ergebnis
 
 <details>
-<summary> Ergebnisliste anzeigen </summary>
+<summary>Ergebnisliste anzeigen</summary>
 
 ```text 
 product_id,"title"
