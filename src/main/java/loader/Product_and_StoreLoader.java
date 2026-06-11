@@ -97,10 +97,11 @@ public class Product_and_StoreLoader {
         }
 
         // Duplikat prüfen
+        boolean productExists = false; 
         try (PreparedStatement stmt = conn.prepareStatement(
                 "SELECT 1 FROM product WHERE product_id = ?")) {
             stmt.setString(1, asin);
-            if (stmt.executeQuery().next()) return; // bereits vorhanden
+            stmt.executeQuery().next(); 
         } catch (SQLException e) {
             ErrorLogger.logError(filePath, itemIndex, "product", "product_id",
                 asin, "Constraint-Fehler", e.getMessage());
@@ -108,8 +109,10 @@ public class Product_and_StoreLoader {
         }
 
         // INSERT product
+        if (!productExists) {
         String insertSql = "INSERT INTO product (product_id, title, product_type, salesrank, picture) " +
-                           "VALUES (?, ?, ?::product_type_enum, ?, ?)";
+    "VALUES (?, ?, ?::product_type_enum, ?, ?) " +
+    "ON CONFLICT (product_id) DO NOTHING";
         try (PreparedStatement stmt = conn.prepareStatement(insertSql)) {
             stmt.setString(1, asin);
             stmt.setString(2, title);
@@ -133,9 +136,11 @@ public class Product_and_StoreLoader {
 
         // Similar products und Angebot laden
         insertSimilarProducts(item, asin, conn, filePath, itemIndex);
-        insertOffer(item, asin, storeId, conn, filePath, itemIndex);
-    }
-
+        
+    } 
+    
+    insertOffer(item, asin, storeId, conn, filePath, itemIndex);
+ }
     // Lädt Store Informationen aus <shop> Attributen
     private static int insertStore(Element shop, Connection conn, String filePath) {
         String name   = shop.getAttribute("name").trim();
@@ -529,7 +534,8 @@ public class Product_and_StoreLoader {
 
         // INSERT offer
         String sql = "INSERT INTO offer (product_id, store_id, price, condition, currency) " +
-                     "VALUES (?, ?, ?, ?, ?) ON CONFLICT (product_id, store_id) DO UPDATE SET price = EXCLUDED.price";
+                     "VALUES (?, ?, ?, ?, ?) " +
+                     "ON CONFLICT (product_id, store_id, condition) DO UPDATE SET price = EXCLUDED.price, currency = EXCLUDED.currency";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, productId);
             stmt.setInt(2, storeId);

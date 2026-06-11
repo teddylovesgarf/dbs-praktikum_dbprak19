@@ -240,7 +240,7 @@ CREATE TABLE store (
     currency      VARCHAR(10),
 
     CONSTRAINT pk_offer
-        PRIMARY KEY (product_id, store_id),
+        PRIMARY KEY (product_id, store_id, condition),
 
     CONSTRAINT fk_offer_product
         FOREIGN KEY (product_id)
@@ -253,6 +253,7 @@ CREATE TABLE store (
         REFERENCES store (store_id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
+   
 
     CONSTRAINT chk_offer_price
         CHECK (price IS NULL OR price >= 0)
@@ -282,12 +283,13 @@ CREATE TABLE cartposition (
     cart_id              INTEGER       NOT NULL,
     product_id           VARCHAR(50)   NOT NULL,
     store_id             INTEGER       NOT NULL,
+    condition            VARCHAR(100)  NOT NULL,
     price_at_purchase    DECIMAL(10,2) NOT NULL,
     quantity             INTEGER       NOT NULL,
 
 
     CONSTRAINT pk_cartposition
-        PRIMARY KEY (cart_id, product_id),
+        PRIMARY KEY (cart_id, product_id, condition),
 
     CONSTRAINT fk_cartposition_cart
         FOREIGN KEY (cart_id)
@@ -296,8 +298,8 @@ CREATE TABLE cartposition (
         ON DELETE CASCADE,
 
     CONSTRAINT fk_cartposition_offer
-        FOREIGN KEY (product_id, store_id)
-        REFERENCES offer (product_id, store_id)
+        FOREIGN KEY (product_id, store_id, condition)
+        REFERENCES offer (product_id, store_id, condition)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
