@@ -2754,39 +2754,35 @@ FROM cd_title
 Die rekursive Anfrage bestimmt zu jedem Produkt dessen Hauptkategorie.
 
 ```sql
+
 WITH RECURSIVE oberkategorie AS ( 
-    -- Anker: alle Kategorien ohne WHERE Filter
-    -- WHERE parent_category_id IS NOT NULL war falsch, da Hauptkategorien selbst
-    -- nicht als Startpunkt geladen wurden. Produkte die direkt einer Hauptkategorie
-    -- zugeordnet sind, wurden dadurch nicht gefunden.
     SELECT category_id, category_name, parent_category_id, category_id AS start_category_id
     FROM category
+    -- WHERE parent_category_id IS NOT NULL war falsch, da Hauptkategorien selbst nicht als Kategorie 
+    -- dadurch geladen wurden und Produkte die eine Hauptkategorie unmittelbar als Oberkategorie hatten
+    -- wurden nicht geladen
 
     UNION ALL 
     
-    -- Rekursion: klettert von jeder Kategorie nach oben zur Wurzel
-    -- start_category_id bleibt dabei immer gleich (Ursprung wird gemerkt)
     SELECT c.category_id, c.category_name, c.parent_category_id, ok.start_category_id
     FROM category c
-    INNER JOIN oberkategorie ok ON c.category_id = ok.parent_category_id
+    INNER JOIN Oberkategorie ok ON c.category_id = ok.parent_category_id
 ),
 
--- Produkte mit ihrer Hauptkategorie verknüpfen
--- WHERE parent_category_id IS NULL filtert nur echte Hauptkategorien
 product_hauptkategorie AS (
+
     SELECT ok.category_id, pc.product_id
     FROM product_category pc 
     JOIN oberkategorie ok ON pc.category_id = ok.start_category_id
-    WHERE ok.parent_category_id IS NULL
-)
+    WHERE ok.parent_category_id IS NULL --Hier erst Hauptkategorie definieren
 
--- Finale Anfrage: Produkte deren ähnliche Produkte in anderer Hauptkategorie sind
+    )
+
 SELECT DISTINCT sp.product_id, sp.similar_product_id 
 FROM similar_products sp 
-JOIN product_hauptkategorie ph  ON sp.product_id          = ph.product_id 
-JOIN product_hauptkategorie ph2 ON sp.similar_product_id  = ph2.product_id 
-WHERE ph2.category_id != ph.category_id
-ORDER BY sp.product_id;
+JOIN product_hauptkategorie ph ON sp.product_id = ph.product_id 
+JOIN product_hauptkategorie ph2 ON sp.similar_product_id = ph2.product_id 
+WHERE ph2.category_id != ph.category_id;
 ```
 
 **Ergebnis:** 691 Produkte haben ähnliche Produkte in einer anderen Hauptkategorie.
