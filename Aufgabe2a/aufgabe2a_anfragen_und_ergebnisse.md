@@ -3820,6 +3820,42 @@ B000CFWGFK,"A Date with Shahrukh Khan"
 ```
 </details> 
 
+## Frage 12: In wieviel Prozent der Fälle der Frage 11 gibt es in Leipzig das preiswerteste Angebot?
+
+### SQL-Lösung
+
+```sql
+-- Anfrage 12 
+WITH all_products AS (
+    SELECT product_id
+    FROM offer
+    GROUP BY product_id
+    HAVING COUNT(DISTINCT store_id) = (SELECT COUNT(*) FROM store)
+),
+min_prices AS (
+    SELECT product_id, MIN(price) AS min_price
+    FROM offer
+    GROUP BY product_id
+),
+min_price_leipzig AS (
+    SELECT DISTINCT o.product_id
+    FROM offer o
+    JOIN store s ON s.store_id = o.store_id
+    JOIN min_prices mp ON mp.product_id = o.product_id AND mp.min_price = o.price
+    WHERE s.store_name = 'Leipzig'
+)
+SELECT ROUND(
+    100.0 * COUNT(mpl.product_id) / COUNT(*),
+    2
+) AS percentage_leipzig
+FROM all_products ap
+LEFT JOIN min_price_leipzig mpl ON ap.product_id = mpl.product_id;
+```
+##Ergebnis
+|percentage_leipzig|
+|---:| 
+|18.89 |
+
 
 
 
