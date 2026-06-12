@@ -3500,6 +3500,8 @@ FROM offer o
 JOIN product p ON p.product_id = o.product_id
 GROUP BY p.product_id, p.title
 HAVING COUNT(DISTINCT o.store_id) = (SELECT COUNT(*) FROM store);
+```
+##Ergebnis
 
 Zur besseren Lesbarkeit wird die Ergebnisliste eingeklappt dargestellt.
 
