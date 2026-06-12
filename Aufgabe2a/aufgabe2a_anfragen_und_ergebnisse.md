@@ -2688,6 +2688,7 @@ ORDER BY anzahl_reviews DESC, c.customer_name;
 
 **ERGEBNIS:**
 | customer_name | anzahl_reviews |
+|---|---:|
 | guest | 881 |
 | media-maniade | 20 |
 | petethemusicfan | 14 |
