@@ -20,6 +20,7 @@ CREATE TABLE product(
     product_type product_type_enum NOT NULL,
     salesrank       INTEGER,
     picture         VARCHAR(1000),
+    avg_rating_product DECIMAL(3,2),
     -- rating wird aus reviews berechnet, daher kein Attribut in der Produkt-Tabelle
     
     CONSTRAINT pk_product 
@@ -342,7 +343,30 @@ CREATE TABLE review (
         CHECK (rating BETWEEN 1 AND 5)
 );
 
+--DML-Trigger
+--Keine Reaktion auf Änderung auf rating möglich
 
+ALTER TABLE product
+ADD COLUMN avg_rating_product DECIMAL(3,2); --durchschnittliche Bewertung mit 2 Nachkommastellen, max 5.00
+
+CREATE OR REPLACE FUNCTION update_avg_rating_product()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE product
+            SET avg_rating_product = (
+                SELECT AVG(rating)
+                FROM review
+                WHERE review.product_id = NEW.product_id
+            )
+            WHERE product_id = NEW.product_id;
+    RETURN NEW; 
+END;
+$$ LANGUAGE plpgsql;
+
+    CREATE TRIGGER avg_rating_product
+        AFTER INSERT ON review
+        FOR EACH ROW
+        EXECUTE FUNCTION update_avg_rating_product();
 
 
 -- was sucht man besonders häufig was nicht als PK gespeichert ist?
