@@ -141,6 +141,7 @@ public class ReviewLoader {
     private void insertReview(String[] row) throws SQLException {
         String productId = row[0].trim();
         int rating = Integer.parseInt(row[1].trim());
+        int helpful = Integer.parseInt(row[2].trim());
         LocalDate reviewDate = LocalDate.parse(row[3].trim());
         String userName = row[4].trim();
 
@@ -156,16 +157,18 @@ public class ReviewLoader {
         int customerId = findOrCreateCustomer(userName);
 
         String sql = """
-                INSERT INTO review (customer_id, product_id, rating, review_text, review_date)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO review (customer_id, product_id, rating, helpful, summary, review_text, review_date)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
                 """;
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, customerId);
             statement.setString(2, productId);
             statement.setInt(3, rating);
-            statement.setString(4, reviewText);
-            statement.setDate(5, Date.valueOf(reviewDate));
+            statement.setInt(4, helpful);
+            statement.setString(5, summary);
+            statement.setString(6, reviewText);
+            statement.setDate(7, Date.valueOf(reviewDate));
 
             statement.executeUpdate();
         }
