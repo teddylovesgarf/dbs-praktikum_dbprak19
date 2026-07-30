@@ -1,5 +1,5 @@
 #Aufgabe 2a
-
+## Frage 1: Wieviele Produkte jeden Typs (Buch, Musik-CD, DVD) sind in der Datenbank erfasst? Hinweis: Geben Sie das Ergebnis in einer 3-spaltigen Relation aus.
 ```sql
 -- Anfrage 1
 SELECT
@@ -17,6 +17,7 @@ ORDER BY product_type;
 |music_cd| 1940|
 | dvd | 690 |  
 
+## Frage 2: Nennen Sie die 5 besten Produkte jedes Typs (Buch, Musik-CD, DVD) sortiert nach dem durchschnittlichem Rating. Hinweis: Geben Sie das Ergebnis in einer einzigen Relation mit den Attributen Typ, ProduktNr, Rating aus. Wie werden gleiche durchschnittliche Ratings behandelt?
 ```sql
 -- Anfrage 2
 WITH product_ratings AS (
@@ -70,6 +71,7 @@ ORDER BY product_type, average_rating DESC, product_id;
 | dvd | B00004RJEG | 5.0000000000000000 |
 | dvd | B00004RYTK | 5.0000000000000000 |
 
+## Frage 3: Für welche Produkte gibt es im Moment kein Angebot?
 ``` sql
 --Anfrage 3
 SELECT
@@ -2473,6 +2475,7 @@ B000002SD2
 
  </details>
 
+## Frage 4: Für welche Produkte ist das teuerste Angebot mehr als doppelt so teuer wie das preiswerteste?
 ```sql
 -- Anfrage 4
 SELECT product_id FROM offer
@@ -2487,6 +2490,7 @@ HAVING MAX(price) > 2* MIN(price)
 |---|
 | keine Ergebnisse |
 
+## Frage 5: Welche Produkte haben sowohl mindestens eine sehr schlechte (Punktzahl: 1) als auch mindestens eine sehr gute (Punktzahl: 5) Bewertung?
 ```sql
 --Anfrage 5
 SELECT DISTINCT product_id FROM review p
@@ -2656,6 +2660,7 @@ B0002ZCJM0
 
  </details>
 
+## Frage 6: Für wieviele Produkte gibt es gar keine Rezension?
 ```sql
 --Anfrage 6
 SELECT 
@@ -2673,6 +2678,8 @@ WHERE NOT EXISTS (
 |---:| 
 | 1228|
 
+
+## Frage 7: Nennen Sie alle Rezensenten, die mindestens 10 Rezensionen geschrieben haben. 
 ```sql
 --Anfrage 7
 SELECT
@@ -2697,6 +2704,7 @@ ORDER BY anzahl_reviews DESC, c.customer_name;
 | katja-lesemaus | 11 |
 | marccoll11 | 10 |
 
+## Frage 8: Geben Sie eine duplikatfreie und alphabetisch sortierte Liste der Namen aller Buchautoren an, die auch an DVDs oder Musik-CDs beteiligt sind.
 ```sql
 --Anfrage 8
 SELECT DISTINCT a.contributor_name
@@ -2730,7 +2738,7 @@ ORDER BY a.contributor_name;
 |Sandra |
 | Va |
 
-
+## Frage 9: Wie hoch ist die durchschnittliche Anzahl von Liedern einer Musik-CD?
 ```sql
 --Anfrage 9
 SELECT AVG(anzahl_title) AS average_titel_on_cd
@@ -3502,7 +3510,7 @@ JOIN product p ON p.product_id = o.product_id
 GROUP BY p.product_id, p.title
 HAVING COUNT(DISTINCT o.store_id) = (SELECT COUNT(*) FROM store);
 ```
-##Ergebnis
+**ERGEBNIS:**
 
 Zur besseren Lesbarkeit wird die Ergebnisliste eingeklappt dargestellt.
 
@@ -3852,7 +3860,7 @@ SELECT ROUND(
 FROM all_products ap
 LEFT JOIN min_price_leipzig mpl ON ap.product_id = mpl.product_id;
 ```
-##Ergebnis
+**ERGEBNIS:**
 |percentage_leipzig|
 |---:| 
 |18.89 |

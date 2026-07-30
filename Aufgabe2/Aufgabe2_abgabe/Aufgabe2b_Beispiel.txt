@@ -1,0 +1,28 @@
+SELECT product_id, avg_rating_product 
+FROM product 
+WHERE product_id = 'B00004STZB';
+
+
+INSERT INTO review (
+customer_id, 
+product_id, 
+rating, 
+helpful, 
+summary, 
+review_text, 
+review_date
+)
+VALUES (
+1, 
+'B00004STZB', 
+5, 
+0, 
+'Ganz toll!', 
+'Finde das Produkt genial', 
+CURRENT_DATE
+)
+RETURNING *;        
+
+SELECT product_id, avg_rating_product 
+FROM product 
+WHERE product_id = 'B00004STZB';
