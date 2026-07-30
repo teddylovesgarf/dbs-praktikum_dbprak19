@@ -1,5 +1,5 @@
-package db_praktikum;
-public interface ProductInterface {
+package db_praktikum.schnittstelle;
+public interface StoreInterface {
     void init(Properties props);
     void finish();
     Product getProduct(int productId);
