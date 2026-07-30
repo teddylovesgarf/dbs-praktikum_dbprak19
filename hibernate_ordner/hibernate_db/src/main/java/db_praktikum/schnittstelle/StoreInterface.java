@@ -1,4 +1,8 @@
 package db_praktikum.schnittstelle;
+
+import java.util.Properties;
+import java.util.List;
+
 public interface StoreInterface {
     void init(Properties props);
     void finish();
