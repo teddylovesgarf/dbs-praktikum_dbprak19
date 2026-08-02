@@ -12,6 +12,12 @@ package db_praktikum.entities_collection;
     public Product() {
     }
 
+    protected Product(String productId, String title, Integer salesrank, String picture) {
+    this.productId = productId;
+    this.title = title;
+    this.salesrank = salesrank;
+    this.picture = picture;
+}
     public String getProductId() { 
         return productId; 
     }
@@ -40,7 +46,7 @@ package db_praktikum.entities_collection;
         this.title = title;
     }
 
-    public void setSalesrank(int salesrank) {
+    public void setSalesrank(Integer salesrank) {
         this.salesrank = salesrank;
     }
 
