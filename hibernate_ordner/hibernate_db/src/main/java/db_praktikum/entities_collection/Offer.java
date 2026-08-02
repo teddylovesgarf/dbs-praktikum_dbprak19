@@ -1,19 +1,23 @@
 package db_praktikum.entities_collection;
+import java.math.BigDecimal;
+
 
 public class Offer {
-private double price;
+private BigDecimal price;
 private String condition;
 private String currency;
+private Product product;
+private Store store;
 
     public Offer () {
         
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -31,5 +35,21 @@ private String currency;
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 }

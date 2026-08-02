@@ -3,11 +3,14 @@ package db_praktikum.entities_collection;
 import java.time.LocalDate;
 
 public class Review {
+    private Integer reviewId;
     private Integer rating; 
     private Integer helpful; 
     private String summary;
     private String reviewText; 
     private LocalDate reviewDate;
+    private Product product;
+    private Customer customer;
 
     public Review() {
     
@@ -43,6 +46,30 @@ public class Review {
     public void setReviewDate(LocalDate reviewDate) {
         this.reviewDate = reviewDate;
     } 
+
+    public Integer getReviewId() {
+        return reviewId;
+    }
+
+    public void setReviewId(Integer reviewId) {
+        this.reviewId = reviewId;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
 
 }
