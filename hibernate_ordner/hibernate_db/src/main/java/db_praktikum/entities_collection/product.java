@@ -1,6 +1,6 @@
 package db_praktikum.entities_collection;
 
- abstract class Product {
+ public abstract class Product {
 
    private String productId; 
     private String title;
