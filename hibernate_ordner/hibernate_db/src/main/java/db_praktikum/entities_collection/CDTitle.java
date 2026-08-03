@@ -1,7 +1,15 @@
 package db_praktikum.entities_collection;
 
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "cd_title")
 public class CDTitle {
 
+@Embedded
+private CDTietleId id;
     private Integer titleNumber;
     private String titleName;
     private CD cd;   // referenz zur zugehörigen CD
