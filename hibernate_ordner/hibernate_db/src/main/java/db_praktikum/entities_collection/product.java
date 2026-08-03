@@ -1,11 +1,14 @@
 package db_praktikum.entities_collection;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,6 +33,10 @@ public abstract class Product {
 
     @Column(name = "avg_rating_product")
     private double averageRating;
+
+    @OneToMany(mappedBy = "product")
+    private List<Offer> offers;
+
 
     
     public Product() {

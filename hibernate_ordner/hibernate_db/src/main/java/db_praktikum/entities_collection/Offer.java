@@ -1,15 +1,43 @@
 package db_praktikum.entities_collection;
 import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
-public class Offer {     // composite primary key 
+
+
+@Entity
+@Table(name = "offer")
+@IdClass(OfferId.class)
+public class Offer {     // composite primary key OfferId 
+
+@Column(name = "price")
 private BigDecimal price;
+
+@Id
+@Column(name = "condition")
 private String condition;
+
+@Column(name = "currency")
 private String currency;
+
+@Id
+@ManyToOne
+@JoinColumn(name = "product_id")
 private Product product;
+
+@Id
+@ManyToOne
+@JoinColumn(name = "store_id")
 private Store store;
 
-    public Offer () {
+
+public Offer () {
         
     }
 
