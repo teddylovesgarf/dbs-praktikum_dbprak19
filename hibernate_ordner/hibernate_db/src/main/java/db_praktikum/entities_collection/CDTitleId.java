@@ -1,10 +1,10 @@
 package db_praktikum.entities_collection;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
 
 @Embeddable
 public class CDTitleId implements Serializable{
@@ -51,7 +51,7 @@ public class CDTitleId implements Serializable{
     public int hashCode() {
         return Objects.hash(productId, titleNumber);
     }
-    
+
 
 
 }
