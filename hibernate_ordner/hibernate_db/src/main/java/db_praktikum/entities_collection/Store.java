@@ -1,5 +1,4 @@
 package db_praktikum.entities_collection;
-
 public class Store {
     private Integer storeId; 
     private String storeName; 
