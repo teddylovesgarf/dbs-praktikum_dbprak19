@@ -1,6 +1,14 @@
 package db_praktikum.entities_collection;
 
- public abstract class Product {
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "product_type")
+
+public abstract class Product {
 
    private String productId; 
     private String title;

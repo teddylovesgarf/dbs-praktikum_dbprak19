@@ -1,6 +1,7 @@
 package db_praktikum.entities_collection;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
@@ -8,6 +9,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "dvd")
 @PrimaryKeyJoinColumn(name = "product_id")
+@DiscriminatorValue("dvd")
 public class Dvd extends Product {
 
     @Column(name = "format", length = 100)

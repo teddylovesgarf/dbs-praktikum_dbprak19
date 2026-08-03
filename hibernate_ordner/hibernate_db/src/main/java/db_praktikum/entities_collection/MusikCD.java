@@ -2,6 +2,7 @@ package db_praktikum.entities_collection;
 import java.time.LocalDate;
 import java.util.List;
 
+@DiscriminatorValue("music_cd")
 public class MusikCD extends Product {
     private String label; 
     private LocalDate publicationDate; 
