@@ -1,19 +1,34 @@
 package db_praktikum.entities_collection;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "product")
 @DiscriminatorColumn(name = "product_type")
-
+        
 public abstract class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")   
    private String productId; 
+
+   @Column(name = "title", nullable = false)
     private String title;
+
+    @Column(name = "salesrank")
    private Integer salesrank;
+
+   @Column(name = "picture")
     private String picture; 
+
+    @Column(name = "avg_rating_product")
     private double averageRating;
 
     

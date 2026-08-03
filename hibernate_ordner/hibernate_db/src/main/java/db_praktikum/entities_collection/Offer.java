@@ -2,7 +2,7 @@ package db_praktikum.entities_collection;
 import java.math.BigDecimal;
 
 
-public class Offer {
+public class Offer {     // composite primary key 
 private BigDecimal price;
 private String condition;
 private String currency;

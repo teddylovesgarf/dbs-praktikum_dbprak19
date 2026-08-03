@@ -1,17 +1,23 @@
 package db_praktikum.entities_collection;
 
 import jakarta.persistence.Embedded;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "cd_title")
 public class CDTitle {
-
+    
+@EmbeddedId
 @Embedded
-private CDTietleId id;
+    private CDTitle id id;
     private Integer titleNumber;
     private String titleName;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
     private MusikCD cd;   // referenz zur zugehörigen CD
 
     public CDTitle() {
