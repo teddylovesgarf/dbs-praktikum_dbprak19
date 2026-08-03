@@ -1,0 +1,6 @@
+# Maven Build Output
+target/
+hibernate_ordner/hibernate_db/target/
+
+# Java compiled files
+*.class
