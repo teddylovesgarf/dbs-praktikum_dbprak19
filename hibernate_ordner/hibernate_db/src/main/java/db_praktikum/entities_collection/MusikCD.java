@@ -1,14 +1,13 @@
 package db_praktikum.entities_collection;
 import java.time.LocalDate;
-
 import java.util.List;
 
-public class CD extends Product {
+public class MusikCD extends Product {
     private String label; 
     private LocalDate publicationDate; 
     private List<CDTitle> titles; 
 
-    public CD() { 
+    public MusikCD() { 
         super();
     }
 

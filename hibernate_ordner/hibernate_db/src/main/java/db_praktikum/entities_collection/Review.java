@@ -2,13 +2,37 @@ package db_praktikum.entities_collection;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+@Entity 
+@Table(name = "review")   
 public class Review {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review")  
     private Integer reviewId;
+
+    @Column(name = "rating", nullable = false)
     private Integer rating; 
+
+    @Column(name = "helpful")
     private Integer helpful; 
+
+    @Column(name = "summary")
     private String summary;
+
+    @Column(name = "review_text", nullable = false)
     private String reviewText; 
+
+    @Column(name = "review_date", nullable = false)
     private LocalDate reviewDate;
+
+    
     private Product product;
     private Customer customer;
 
