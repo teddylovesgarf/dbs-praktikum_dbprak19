@@ -12,7 +12,7 @@ public class CDTitle {
 private CDTietleId id;
     private Integer titleNumber;
     private String titleName;
-    private CD cd;   // referenz zur zugehörigen CD
+    private MusikCD cd;   // referenz zur zugehörigen CD
 
     public CDTitle() {
     }
@@ -33,11 +33,11 @@ private CDTietleId id;
         this.titleName = titleName;
     }
 
-    public CD getCd() {
+    public MusikCD getCd() {
         return cd;
     }
 
-    public void setCd(CD cd) {
+    public void setCd(MusikCD cd) {
         this.cd = cd;
     }
 }

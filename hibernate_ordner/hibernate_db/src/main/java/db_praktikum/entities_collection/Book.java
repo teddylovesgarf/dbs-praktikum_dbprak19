@@ -1,12 +1,15 @@
 package db_praktikum.entities_collection;
 import java.time.LocalDate;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "book")
+@DiscriminatorValue("book")
 @PrimaryKeyJoinColumn(name = "product_id")
 
 public class Book extends Product {
