@@ -25,7 +25,7 @@ public class Cartposition {
     @Column(name = "store_id", nullable = false)
     private Integer storeId;
 
-    @Column(name = "price_at_purchase", nullable = false)
+    @Column(name = "price_at_purchase", precision = 10, scale = 2, nullable = false)
     private BigDecimal priceAtPurchase;
 
     @Column(name = "quantity", nullable = false)
@@ -34,49 +34,42 @@ public class Cartposition {
     public Cartposition() {
     }
 
-    public Cartposition(Cart cart, String productId, String condition,
-                        Integer storeId, BigDecimal priceAtPurchase, Integer quantity) {
-        this.cart = cart;
-        this.id = new CartpositionId(cart.getCartId(), productId, condition);
-        this.storeId = storeId;
-        this.priceAtPurchase = priceAtPurchase;
-        this.quantity = quantity;
-    }
 
     public CartpositionId getId() {
         return id;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public Integer getStoreId() {
-        return storeId;
-    }
-
-    public BigDecimal getPriceAtPurchase() {
-        return priceAtPurchase;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
     }
 
     public void setId(CartpositionId id) {
         this.id = id;
     }
 
+
+    public Cart getCart() {
+        return cart;
+    }
+
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public Integer getStoreId() {
+        return storeId;
     }
 
     public void setStoreId(Integer storeId) {
         this.storeId = storeId;
     }
 
-    public void setPriceAtPurchase(BigDecimal priceAtPurchase) {
+    public BigDecimal getPriceAtPurchase() {
+        return priceAtPurchase;
+    }
+
+     public void setPriceAtPurchase(BigDecimal priceAtPurchase) {
         this.priceAtPurchase = priceAtPurchase;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public void setQuantity(Integer quantity) {
@@ -91,10 +84,14 @@ public class Cartposition {
         return id != null ? id.getCondition() : null;
     }
 
+    public Integer getCartId() {
+        return id != null ? id.getCartId() : null;
+    }
+
     @Override
     public String toString() {
         return "Cartposition{" +
-                "cartId=" + (id != null ? id.getCartId() : null) +
+                "cartId=" + getCartId() +
                 ", productId='" + getProductId() + '\'' +
                 ", condition='" + getCondition() + '\'' +
                 ", storeId=" + storeId +

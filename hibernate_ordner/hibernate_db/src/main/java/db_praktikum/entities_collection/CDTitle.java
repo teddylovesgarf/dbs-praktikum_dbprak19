@@ -1,34 +1,40 @@
 package db_praktikum.entities_collection;
 
-import jakarta.persistence.Embedded;
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "cd_title")
 public class CDTitle {
-    
+
 @EmbeddedId
-@Embedded
-    private CDTitle id id;
-    private Integer titleNumber;
-    private String titleName;
+private CDTitleId id;
+
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private MusikCD cd;   // referenz zur zugehörigen CD
+    @MapsId("productId")
+    @JoinColumn(name = "product_id", nullable = false)
+
+    private MusikCD cd;
+
+    //title_number ist in CDTitleId enthalten, daher hier nicht nochmal als Attribut
+
+    @Column(name = "title_name", length = 300, nullable = false)
+    private String titleName;
 
     public CDTitle() {
     }
 
-    public Integer getTitleNumber() {
-        return titleNumber;
+    public CDTitleId getId(){
+        return id;
     }
 
-    public void setTitleNumber(Integer titleNumber) {
-        this.titleNumber = titleNumber;
+    public void setId(CDTitleId id) {
+        this.id = id;
     }
 
     public String getTitleName() {

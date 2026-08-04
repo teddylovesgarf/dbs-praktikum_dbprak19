@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -31,6 +32,9 @@ public class Category {
 
     @OneToMany(mappedBy = "parentCategory")
     private List<Category> subcategories = new ArrayList<>();
+
+    @ManyToMany(mappedBy ="categories")
+    private List<Product> products = new ArrayList<>();
 
     public Category() {
     }
@@ -67,6 +71,14 @@ public class Category {
     public void setSubcategories(List<Category> subcategories) {
         this.subcategories = subcategories;
     }
+    //Hoffentlich nützlich bei getProductsByCategoryPath()
+    public List<Product> getProducts() {
+        return products;
+}
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+}
 
     @Override
     public String toString() {

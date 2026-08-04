@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
@@ -14,7 +16,7 @@ import jakarta.persistence.Table;
 
 public class Book extends Product {
 
-    @Column(name = "isbn", unique = true)
+    @Column(name = "isbn", length = 20, unique = true)
     private String isbn;
 
     @Column(name = "pages")
@@ -23,8 +25,9 @@ public class Book extends Product {
     @Column(name = "publication_date")
     private LocalDate publicationDate;
     
-    @Column(name = "publisher_id")
-    private Integer publisherId;
+    @ManyToOne
+    @JoinColumn(name = "publisher_id")
+    private Publisher publisher;
 
     public Book(){
 
@@ -33,13 +36,13 @@ public class Book extends Product {
     public Book(String productId, String title, String productType,
             Integer salesrank, String picture,
             String isbn, Integer pages,
-            LocalDate publicationDate, Integer publisherId) {
+            LocalDate publicationDate, Publisher publisher) {
 
         super(productId, title, productType, salesrank, picture);
         this.isbn = isbn;
         this.pages = pages;
         this.publicationDate = publicationDate;
-        this.publisherId = publisherId;
+        this.publisher = publisher;
     }
 
     public String getIsbn(){
@@ -54,8 +57,8 @@ public class Book extends Product {
         return publicationDate;
     }
 
-    public Integer getPublisherId(){
-        return publisherId;
+    public Publisher getPublisher(){
+        return publisher;
     }
 
     public void setIsbn(String isbn){
@@ -70,8 +73,8 @@ public class Book extends Product {
         this.publicationDate = publicationDate;
     }
 
-    public void setPublisherId(Integer publisherId){
-        this.publisherId = publisherId;
+    public void setPublisher(Publisher publisher){
+        this.publisher = publisher;
     }
 
     @Override
@@ -85,7 +88,7 @@ public class Book extends Product {
                 ", isbn='" + isbn + '\'' +
                 ", pages=" + pages +
                 ", publicationDate=" + publicationDate +
-                ", publisherId=" + publisherId +
+                ", publisher=" + publisher +
                 '}';
                 
             }
