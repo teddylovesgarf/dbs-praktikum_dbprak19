@@ -16,10 +16,9 @@ import jakarta.persistence.Table;
 @Entity 
 @Table(name = "cart")
 public class Cart {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OneToMany(mappedBy = "cart")
-    private List<Cartposition> cartPositions = new ArrayList<>();
     @Column(name = "cart_id", nullable =false)
     private Integer cartId;
 
@@ -29,7 +28,7 @@ public class Cart {
 
     @OneToMany(mappedBy = "cart")
     private List<Cartposition> positions = new ArrayList<>();
-
+    
     @Column(name = "cart_time", nullable =false)
     private LocalDateTime cartTime;
 
