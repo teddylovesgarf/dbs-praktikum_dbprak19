@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 
@@ -29,13 +30,15 @@ private String condition;
 @Column(name = "currency")
 private String currency;
 
-@Id
+
 @ManyToOne
+@MapsId("productId")
 @JoinColumn(name = "product_id")
 private Product product;
 
-@Id
+
 @ManyToOne
+@MapsId("storeId")
 @JoinColumn(name = "store_id")
 private Store store;
 
@@ -82,5 +85,13 @@ public Offer () {
 
     public void setStore(Store store) {
         this.store = store;
+    }
+
+    public OfferId getId() {
+        return id;
+    }
+
+    public void setId(OfferId id) {
+        this.id = id;
     }
 }
