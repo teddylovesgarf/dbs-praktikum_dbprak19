@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import org.hibernate.cfg.Configuration;
 
-import db_praktikum.resources.hibernate.properties;;
+import db_praktikum.resources.hibernate.properties;
 import db_praktikum.middleware.HibernateMediaStore;
 import db_praktikum.schnittstelle.StoreInterface;
 
