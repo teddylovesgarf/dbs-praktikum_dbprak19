@@ -1,6 +1,7 @@
 package db_praktikum.entities_collection;
 import java.time.LocalDateTime;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity 
@@ -22,6 +24,9 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
+
+    @OneToMany(mappedBy = "cart")
+    private List<Cartposition> positions = new ArrayList<>();
 
     @Column(name = "cart_time", nullable =false)
     private LocalDateTime cartTime;
@@ -48,6 +53,14 @@ public Cart(Customer customer, LocalDateTime cartTime, String shippingAddress, S
 
     public Customer getCustomer() {
         return customer;
+    }
+
+    public List<Cartposition> getPositions() {
+        return positions;
+    }
+
+    public void setPositions(List<Cartposition> positions) {
+        this.positions = positions;
     }
 
     public LocalDateTime getCartTime() {

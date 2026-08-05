@@ -1,10 +1,14 @@
 package db_praktikum.entities_collection;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -19,6 +23,9 @@ public class Publisher {
 
     @Column(name = "publisher_name", nullable = false)
     private String publisherName; 
+
+    @OneToMany(mappedBy = "publisher")
+    private List<Book> books = new ArrayList<>();
 
     public Publisher() { 
     }
@@ -37,5 +44,13 @@ public class Publisher {
 
     public void setPublisherName(String publisherName) {
         this.publisherName = publisherName;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

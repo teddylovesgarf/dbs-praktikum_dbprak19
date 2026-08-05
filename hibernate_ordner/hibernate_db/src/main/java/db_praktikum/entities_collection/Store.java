@@ -1,11 +1,15 @@
 package db_praktikum.entities_collection;
  
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity 
@@ -25,6 +29,9 @@ public class Store {
 
     @Column(name = "zip")
     private String zipcode; 
+
+    @OneToMany(mappedBy = "store")
+    private List<Offer> offers = new ArrayList<>();
 
     public Store(){
 
@@ -60,6 +67,14 @@ public class Store {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 
     @Override
