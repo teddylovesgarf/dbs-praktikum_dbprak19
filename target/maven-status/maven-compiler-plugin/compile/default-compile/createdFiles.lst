@@ -1,0 +1,9 @@
+loader\Product_and_StoreLoader.class
+loader\StoreLoader.class
+error\ErrorLogger.class
+loader\CategoryLoader.class
+loader\ReviewLoader.class
+Loader.class
+parser\CSVParser.class
+parser\XMLParser.class
+db\DBConnection.class
