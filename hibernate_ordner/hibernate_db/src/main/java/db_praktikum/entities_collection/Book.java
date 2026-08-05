@@ -33,12 +33,12 @@ public class Book extends Product {
 
     }
 
-    public Book(String productId, String title, String productType,
+    public Book(String productId, String title,
             Integer salesrank, String picture,
             String isbn, Integer pages,
             LocalDate publicationDate, Publisher publisher) {
 
-        super(productId, title, productType, salesrank, picture);
+        super(productId, title, salesrank, picture);
         this.isbn = isbn;
         this.pages = pages;
         this.publicationDate = publicationDate;
@@ -80,9 +80,9 @@ public class Book extends Product {
     @Override
     public String toString() {
         return "Book{" +
-                "productId='" + getProductId() + '\'' +
+                "productId='" + getProductId() + '\'' + 
+                ", productType='" + getClass().getSimpleName() + '\'' +
                 ", title='" + getTitle() + '\'' +
-                ", productType='" + getProductType() + '\'' +
                 ", salesrank=" + getSalesrank() +
                 ", picture='" + getPicture() + '\'' +
                 ", isbn='" + isbn + '\'' +

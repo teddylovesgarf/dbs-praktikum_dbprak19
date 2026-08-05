@@ -24,9 +24,9 @@ public class Dvd extends Product {
     public Dvd() {
     }
 
-    public Dvd(String productId, String title, String productType, Integer salesrank, 
+    public Dvd(String productId, String title, Integer salesrank, 
         String picture, String format, Integer runtimeMinutes, Integer regionCode) {
-        super(productId, title, productType, salesrank, picture);
+        super(productId, title, salesrank, picture);
         this.format = format;
         this.runtimeMinutes = runtimeMinutes;
         this.regionCode = regionCode;
@@ -60,8 +60,8 @@ public class Dvd extends Product {
       public String toString() {
         return "Dvd{" +
                 "productId='" + getProductId() + '\'' +
+                ", productType='" + getClass().getSimpleName() + '\'' +
                 ", title='" + getTitle() + '\'' +
-                ", productType='" + getProductType() + '\'' +
                 ", salesrank=" + getSalesrank() +
                 ", picture='" + getPicture() + '\'' +
                 ", format='" + format + '\'' +

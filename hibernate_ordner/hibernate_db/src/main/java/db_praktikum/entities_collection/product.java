@@ -5,22 +5,22 @@ import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "product")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  //?????????
 @DiscriminatorColumn(name = "product_type")
         
 public abstract class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")   
-   private String productId; 
+    private String productId; 
 
    @Column(name = "title", nullable = false)
     private String title;
