@@ -1,5 +1,6 @@
 package db_praktikum.entities_collection;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public abstract class Product {
     private String picture; 
 
     @Column(name = "avg_rating_product")
-    private double averageRating;
+    private BigDecimal averageRating;
 
     @OneToMany(mappedBy = "product")
     private List<Offer> offers = new ArrayList<>();
@@ -78,7 +79,7 @@ public abstract class Product {
         return picture; 
     }
     
-    public double getAverageRating() {
+    public BigDecimal getAverageRating() {
         return averageRating;
     }
 

@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -22,10 +21,6 @@ private OfferId id;
 
 @Column(name = "price")
 private BigDecimal price;
-
-@Id
-@Column(name = "condition")
-private String condition;
 
 @Column(name = "currency")
 private String currency;
@@ -55,13 +50,6 @@ public Offer () {
         this.price = price;
     }
 
-    public String getCondition() {
-        return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
 
     public String getCurrency() {
         return currency;
