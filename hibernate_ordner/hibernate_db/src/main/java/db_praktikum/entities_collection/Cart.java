@@ -1,7 +1,6 @@
 package db_praktikum.entities_collection;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,6 +17,8 @@ import jakarta.persistence.Table;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @OneToMany(mappedBy = "cart")
+    private List<Cartposition> cartPositions = new ArrayList<>();
     @Column(name = "cart_id", nullable =false)
     private Integer cartId;
 
