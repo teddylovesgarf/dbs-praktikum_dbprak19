@@ -2,9 +2,9 @@ package db_praktikum.entities_collection;
 import java.math.BigDecimal;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -13,8 +13,11 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "offer")
-@IdClass(OfferId.class)
 public class Offer {     // composite primary key OfferId 
+
+
+@EmbeddedId 
+private OfferId id; 
 
 @Column(name = "price")
 private BigDecimal price;
