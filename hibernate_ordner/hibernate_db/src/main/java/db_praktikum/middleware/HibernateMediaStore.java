@@ -3,6 +3,7 @@ package db_praktikum.middleware;
 import java.util.List;
 import java.util.Properties;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -82,13 +83,37 @@ public class HibernateMediaStore implements StoreInterface {
 
     @Override
     public Product getProduct(String productId){
-        return  null;
+       try (Session session = getSessionFactory().openSession()) {
+            return session.get(Product.class, productId);
+        } catch (Exception e) {
+            System.err.println("Fehler beim Abrufen des Produkts: " + e.getMessage());
+            return null;
+        }
     }
 
     @Override
     public List<Product> getProducts(String pattern) {
-        return null;
+
+        try(Session session = getSessionFactory().openSession()){
+
+            if(pattern == null || pattern.isBlank()){
+                return session.createQuery("FROM Product p ORDER BY p.title",
+                 Product.class)
+                 .list();
+            }
+            return session.createQuery(
+                "FROM Product p WHERE p.title LIKE :pattern ORDER BY p.title",
+                Product.class
+            )
+            .setParameter("pattern", "%" + pattern + "%")
+            .list();
+        } catch (Exception e) {
+            System.err.println("Fehler beim Abrufen der Produkte: " + e.getMessage());
+            return List.of();
+
+        }
     }
+        
 
     @Override
     public Category getCategoryTree() {
