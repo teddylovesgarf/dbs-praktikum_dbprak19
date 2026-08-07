@@ -117,12 +117,93 @@ public class HibernateMediaStore implements StoreInterface {
 
     @Override
     public Category getCategoryTree() {
-        return null;
-    }
+        try (Session session = getSessionFactory().openSession()) {
+            List<Category> rootCategories = session.createQuery(
+                "FROM Category c WHERE c.parentCategory IS NULL", 
+                Category.class)
+                .list();            
+
+               if (rootCategories.isEmpty()) {
+                return null;
+
+               }
+               
+               Category root = rootCategories.get(0);
+
+               loadSubcategories(root);               
+                
+                 return root;
+                 
+                 } catch (Exception e) {
+            System.err.println("Fehler beim Abrufen des Kategorienbaums: " + e.getMessage());
+            
+                return null;
+                }  
+            }
+            //Hilfsmethode, um die Unterkategorien rekursiv zu laden und auszugeben         
+        private void loadSubcategories (Category category){
+
+            for (Category subcategory : category.getSubcategories()) {
+                System.out.println("Unterkategorie: " + subcategory.getCategoryName());
+                loadSubcategories(subcategory);
+            }
+        }
 
     @Override
     public List<Product> getProductsByCategoryPath(List<String> categoryPath) {
-        return null;
+        if(categoryPath==null || categoryPath.isEmpty()){
+                return List.of();
+        }
+        Category root = getCategoryTree();
+
+        if(root == null) {
+            return List.of();
+        }
+
+        if (!categoryPath.get(0).equals(root.getCategoryName())) {
+            return List.of(); 
+        }
+    Category currentCategory = root;
+
+    //Ab i = 1, da das erste Element schon mit der Root verglichen
+    for (int i = 1; i < categoryPath.size(); i++) {
+
+        //nächsten Kategorienamen aus dem Pfad
+        String nextCategoryName = categoryPath.get(i);
+
+        Category foundCategory = null;
+
+        for (Category subcategory : currentCategory.getSubcategories()) {
+            if (nextCategoryName.equals(subcategory.getCategoryName())) {
+
+                //bei passenden Kategorie speichern
+                foundCategory = subcategory;
+                
+                break;
+            }
+        }
+        //Wenn auf dieser Ebene keine passende Kategorie gefunden wurde, ist der Pfad ungültig.
+        if (foundCategory == null) {
+            return List.of();
+        }
+
+        //Die gefundene Unterkategorie wird zur neuen aktuellen Kategorie. 
+        //Danach geht die äußere Schleife zum nächsten Pfadelement.
+        currentCategory = foundCategory;
+    }
+    // Nach erfolgreicher Navigation die Produkte der Kategorie aus der DB laden
+    try (Session session = getSessionFactory().openSession()) {
+        
+        return session.createQuery(
+            "SELECT p FROM Product p JOIN p.categories c WHERE c.categoryId = :categoryId ORDER BY p.title",
+            Product.class)
+            .setParameter("categoryId", currentCategory.getCategoryId())
+            .list();
+
+    } catch (Exception e) {
+        System.err.println("Fehler beim Abrufen der Produkte nach Kategoriepfad: " + e.getMessage());
+        return List.of();
+    }
     }
 
     @Override
