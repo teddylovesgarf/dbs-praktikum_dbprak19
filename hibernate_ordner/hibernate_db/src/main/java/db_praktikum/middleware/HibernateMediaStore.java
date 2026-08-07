@@ -143,8 +143,7 @@ public class HibernateMediaStore implements StoreInterface {
             //Hilfsmethode, um die Unterkategorien rekursiv zu laden und auszugeben         
         private void loadSubcategories (Category category){
 
-            for (Category subcategory : category.getSubcategories()) {
-                System.out.println("Unterkategorie: " + subcategory.getCategoryName());
+            for (Category subcategory : category.getSubcategories()) {                
                 loadSubcategories(subcategory);
             }
         }
@@ -193,7 +192,7 @@ public class HibernateMediaStore implements StoreInterface {
     }
     // Nach erfolgreicher Navigation die Produkte der Kategorie aus der DB laden
     try (Session session = getSessionFactory().openSession()) {
-        
+
         return session.createQuery(
             "SELECT p FROM Product p JOIN p.categories c WHERE c.categoryId = :categoryId ORDER BY p.title",
             Product.class)
