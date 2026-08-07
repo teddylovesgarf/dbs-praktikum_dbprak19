@@ -71,7 +71,10 @@ public class MusikCD extends Product {
                 ", picture='" + getPicture() + '\'' +
                 ", label='" + label + '\'' +
                 ", publication date=" + publicationDate +
-                ", titles=" + titles +
+                //", titles=" + titles +
+                //muss raus, da die Beziehung bei der Methode 
+                // getProduct(String productId); probleme macht
+
                 '}';
       }
 
