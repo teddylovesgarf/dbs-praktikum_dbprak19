@@ -60,6 +60,10 @@ public class Category {
         return subcategories;
     }
 
+    public void setCategoryId(Integer categoryId) {
+    this.categoryId = categoryId;
+}
+
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }

@@ -115,38 +115,35 @@ public class HibernateMediaStore implements StoreInterface {
     }
         
 
-    @Override
-    public Category getCategoryTree() {
-        try (Session session = getSessionFactory().openSession()) {
-            List<Category> rootCategories = session.createQuery(
-                "FROM Category c WHERE c.parentCategory IS NULL", 
-                Category.class)
-                .list();            
+@Override
+public Category getCategoryTree() {
+    try (Session session = getSessionFactory().openSession()) {
+        List<Category> rootCategories = session.createQuery(
+                "FROM Category c WHERE c.parentCategory IS NULL ",
+                Category.class
+        ).list();
 
-               if (rootCategories.isEmpty()) {
-                return null;
-
-               }
-               
-               Category root = rootCategories.get(0);
-
-               loadSubcategories(root);               
-                
-                 return root;
-                 
-                 } catch (Exception e) {
-            System.err.println("Fehler beim Abrufen des Kategorienbaums: " + e.getMessage());
-            
-                return null;
-                }  
-            }
-            //Hilfsmethode, um die Unterkategorien rekursiv zu laden und auszugeben         
-        private void loadSubcategories (Category category){
-
-            for (Category subcategory : category.getSubcategories()) {                
-                loadSubcategories(subcategory);
-            }
+        if (rootCategories.isEmpty()) {
+            return null;
         }
+
+    
+    Category root = rootCategories.get(0);
+
+    loadSubcategories(root);
+
+    return root;
+    } catch (Exception e){
+        System.err.println("Fehler beim Abrufen des Kategorienbaums: " + e.getMessage());
+        return null;
+    }
+}
+
+private void loadSubcategories(Category category) {
+    for (Category sub : category.getSubcategories()) {
+        loadSubcategories(sub);
+    }
+}
 
     @Override
     public List<Product> getProductsByCategoryPath(List<String> categoryPath) {
@@ -194,7 +191,7 @@ public class HibernateMediaStore implements StoreInterface {
     try (Session session = getSessionFactory().openSession()) {
 
         return session.createQuery(
-            "SELECT p FROM Product p JOIN p.categories c WHERE c.categoryId = :categoryId ORDER BY p.title",
+            "SELECT DISTINCT p FROM Product p JOIN p.categories c WHERE c.categoryId = :categoryId ORDER BY p.title",
             Product.class)
             .setParameter("categoryId", currentCategory.getCategoryId())
             .list();

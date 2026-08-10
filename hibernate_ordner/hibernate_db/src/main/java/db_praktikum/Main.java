@@ -2,21 +2,25 @@ package db_praktikum;
 
 
 import java.io.InputStream;
-import java.util.Scanner;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 
 import db_praktikum.entities_collection.Category;
 import db_praktikum.entities_collection.Product;
 import db_praktikum.middleware.HibernateMediaStore;
 import db_praktikum.schnittstelle.StoreInterface;
 
+
 public class Main {
+    private static StoreInterface mediaStore;
+    private static Scanner scanner;
 
     public static void main(String[] args) {
         Properties properties = new Properties();
-        StoreInterface mediaStore = new HibernateMediaStore();
+        mediaStore = new HibernateMediaStore();
+        scanner = new Scanner(System.in);
 
         try (InputStream input = Main.class.getClassLoader()
                 .getResourceAsStream("hibernate.properties")) {
@@ -30,71 +34,74 @@ public class Main {
             mediaStore.init(properties);
 
             System.out.println("Anwendung gestartet.");
+
+            showMainMenu();
+
+        } catch (Exception e) {
+            System.err.println("Fehler beim Starten: " + e.getMessage());
+
+            e.printStackTrace();
+        } finally {
+            try {
+                mediaStore.finish();
+                System.out.println("\n✓ Anwendung beendet.");
+            } catch (Exception ignored) {
+            }
+        }
+    }
             
             //Für die Test-Methoden
             //ProductTest(mediaStore);
             //CategoryTreeTest(mediaStore);
             //CategoryPathTest(mediaStore);
 
-            Scanner scanner = new Scanner(System.in);
-            System.out.println();
-            System.out.println("=== MediaStore Menü ===");
-            System.out.println("1 - Produkt suchen");
-            System.out.println("2 - Produkte nach Titel suchen");
-            System.out.println("3 - Kategorienbaum anzeigen");
-            System.out.println("4 - Produkte nach Kategoriepfad suchen");
-            System.out.println("5 - Top-Produkte anzeigen");
-            System.out.println("6 - Ähnliche günstigere Produkte anzeigen");
-            System.out.println("7 - Bewertung hinzufügen");
-            System.out.println("8 - Trolls anzeigen");
-            System.out.println("9 - Angebote anzeigen");
-            System.out.println("0 - Beenden");
-            System.out.print("Auswahl: ");
-            String auswahl = scanner.nextLine();
-
-            if(auswahl.equals("1")){
-                ProduktSuche(mediaStore, scanner);
-                
-            }else if (auswahl.equals("2")){
-                    System.out.println("Produkte nach Titel suchen gewählt.");
-
-            } else if (auswahl.equals("3")) {
-                System.out.println("Kategorienbaum anzeigen gewählt.");
-
-            } else if (auswahl.equals("4")) {
-                System.out.println("Produkte nach Kategoriepfad suchen gewählt.");
-
-            } else if (auswahl.equals("0")) {
-                System.out.println("Beenden gewählt.");
-
-            } else {
-                System.out.println("Ungültige Eingabe.");
-            }
                   
-            
+                // === HAUPTMENÜ ===
+    private static void showMainMenu() {
+        while (true) {
+            System.out.println("\n╔════════════════════════════════╗");
+            System.out.println("║     === MediaStore Menü ===    ║");
+            System.out.println("╠════════════════════════════════╣");
+            System.out.println("║ 1 - Produkt suchen             ║");
+            System.out.println("║ 2 - Produkte nach Titel        ║");
+            System.out.println("║ 3 - Kategorienbaum anzeigen    ║");
+            System.out.println("║ 4 - Kategoriepfad suchen       ║");
+            System.out.println("║ 5 - Top-Produkte anzeigen      ║");
+            System.out.println("║ 6 - Günstigere Produkte        ║");
+            System.out.println("║ 7 - Bewertung hinzufügen       ║");
+            System.out.println("║ 8 - Trolls anzeigen            ║");
+            System.out.println("║ 9 - Angebote anzeigen          ║");
+            System.out.println("║ 0 - Beenden                    ║");
+            System.out.println("╚════════════════════════════════╝");
+            System.out.print("Auswahl: ");
 
-            
-        
+            String auswahl = scanner.nextLine().trim();
 
-
-            mediaStore.finish();
-
-            System.out.println("Anwendung beendet.");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            try {
-                mediaStore.finish();
-            } catch (Exception ignored)
+            switch (auswahl) {
+                case "1" -> ProduktSuche();
+                case "2" -> ProduktnachTitel();
+                case "3" -> kategorienBaumAnzeigen();
+                case "4" -> produkteNachKategoriePathSuchen();
+                // case "5" -> topProdukteAnzeigen();
+                // case "6" -> aehnlicheGuentigereProdukteAnzeigen();
+                // case "7" -> bewertungHinzufuegen();
+                // case "8" -> trollsAnzeigen();
+                // case "9" -> angeboteAnzeigen();
+                case "0" -> {
+                    System.out.println("\nAuf Wiedersehen!");
+                    return;
+                }
+                default -> System.out.println("Ungültige Eingabe!");
+            }
         }
     }
-}
+
+            
     
 
     //Hilfsmethoden beim Aufrufen aus middleware
 
-public static void ProduktSuche(StoreInterface mediaStore, Scanner scanner){
+public static void ProduktSuche(){
     System.out.println("Suche Detailinformationen zu einem Produkt");
 
     String productId;
@@ -122,7 +129,114 @@ public static void ProduktSuche(StoreInterface mediaStore, Scanner scanner){
             return; 
     }
 
+    System.out.println("Produkt gefunden:");
+    System.out.println("Produkt-ID: " + product.getProductId());
+    System.out.println("Titel: " + product.getTitle());
+    //System.out.println("Produkttyp: " + product.getProductType());
+    System.out.println("Salesrank: " + product.getSalesrank());
+    System.out.println("Durchschnittsbewertung: " + product.getAverageRating());
+    System.out.println("Bild: " + product.getPicture()); 
+}
+
+public static void ProduktnachTitel (){
+    System.out.println("Suche Produkte nach Titeln: ");
+
+    String pattern;
+
+    while(true){
+    System.out.print("Bitte Titel eingeben oder 0 zum Abbrechen: ");
+    pattern = scanner.nextLine();
+
+    if(pattern.equals("0")){
+        System.out.println("Produktsuche abgebrochen.");
+        return;
+    }
+
+    if(!pattern.isBlank()){
+    break;
+    }
+    System.out.println("Keine Title eingegeben.");
+}
+    List<Product> products = mediaStore.getProducts(pattern);    
+    if(products.isEmpty()){
+        System.out.println("Keine Produkte zum Suchbegriff gefunden :(");
+            return; 
+    }
+
+    for (Product product : products){
     System.out.println(product.getProductId() + " | " + product.getTitle()); 
+    }
+}
+
+public static void kategorienBaumAnzeigen() {
+    System.out.println("Kategorienbaum anzeigen");
+
+    Category root = mediaStore.getCategoryTree();
+
+    if (root == null) {
+        System.out.println("Keine Kategorie gefunden.");
+        return;
+    }
+
+    // gibt die Root-Kategorie aus
+    printCategoryTree(root, 0);
+}
+
+private static void printCategoryTree(Category category, int level) {
+    for (int i = 0; i < level; i++) {
+        System.out.print("  ");
+    }
+
+    System.out.println(category.getCategoryId() + " | " + category.getCategoryName());
+
+    for (Category subcategory : category.getSubcategories()) {
+        // sorgt dafür, dass jede tiefere Ebene weiter eingerückt wird
+        printCategoryTree(subcategory, level + 1);
+    }
+}
+
+public static void produkteNachKategoriePathSuchen(){
+       
+    System.out.println("Produkte nach Kategoriepfad suchen");
+    String inpuString;
+
+    while(true){
+    System.out.print("Bitte Kategoriepfad eingeben oder 0 zum Abbrechen: ");
+    inpuString = scanner.nextLine();
+
+    if(inpuString.equals("0")){
+        System.out.println("Suche abgebrochen.");
+        return;
+    }
+
+    if(!inpuString.isBlank()){
+    break;
+    }
+    System.out.println("Keine Angaben getätigt.");
+}
+    List<String> categoryPath = Arrays.asList(inpuString.split("/"));    
+
+    List <Product> products = mediaStore.getProductsByCategoryPath(categoryPath);
+
+    if(products.isEmpty()){
+        System.out.println("Keine Produkte zu diesem Kategoriepfad gefunden :(");
+            return; 
+    }
+
+    for (Product product : products){
+    System.out.println(product.getProductId() + " | " + product.getTitle()); 
+    }
+}
+
+
+
+
+
+
+
+
+
+
 }
 //Testmethoden
 
@@ -179,4 +293,3 @@ public static void ProduktSuche(StoreInterface mediaStore, Scanner scanner){
 // }
 
 
-}
