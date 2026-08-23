@@ -202,6 +202,23 @@ private void loadSubcategories(Category category) {
     }
     }
 
+    
+    @Override
+    public List<Offer> getOffers(String productId) {
+
+        try(Session session = getSessionFactory().openSession()){
+
+            return session.createQuery("SELECT o FROM Offer o WHERE o.id.productId = :productId ORDER BY o.product.title", 
+            Offer.class)
+        .setParameter("productId", productId)
+        .getResultList();  
+    } catch (Exception e) {
+        System.err.println("Fehler beim Abrufen der Angebote " + e.getMessage());
+        return List.of();
+    }
+    }
+
+
     @Override
     public List<Product> getTopProducts(int k) {
         return null;
@@ -221,11 +238,4 @@ private void loadSubcategories(Category category) {
     public List<Customer> getTrolls(double ratingThreshold) {
         return null;
     }   
-
-    @Override
-    public List<Offer> getOffers(String productId) {
-        return null;
-    }
-
-
 }
