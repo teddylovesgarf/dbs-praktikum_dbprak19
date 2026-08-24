@@ -221,7 +221,16 @@ private void loadSubcategories(Category category) {
 
     @Override
     public List<Product> getTopProducts(int k) {
-        return null;
+        try(Session session = getSessionFactory().openSession()){
+
+            return session.createQuery("SELECT p FROM Product p ORDER BY p.averageRating DESC", 
+            Product.class)
+        .setMaxResults(k)    
+        .getResultList();   
+        } catch (Exception e) {
+        System.err.println("Fehler beim Abrufen der Top-Produkte " + e.getMessage());
+        return List.of();
+    }
     }
 
     @Override

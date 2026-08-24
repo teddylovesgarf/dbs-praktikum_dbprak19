@@ -2,7 +2,9 @@ package db_praktikum.entities_collection;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
@@ -26,6 +28,17 @@ public abstract class Product {
     @Id
     @Column(name = "product_id")   
     private String productId; 
+
+
+    @ManyToMany           //self referencing entity
+    @JoinTable(
+        name = "similar_products",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "similar_product_id")
+    )
+
+    private Set<Product> similarProducts = new HashSet<>(); 
+
 
    @Column(name = "title", nullable = false)
     private String title;
@@ -66,6 +79,14 @@ public abstract class Product {
 }
     public String getProductId() { 
         return productId; 
+    }
+
+    public Set<Product> getSimilarProducts() {
+        return similarProducts;
+    }
+
+    public void setSimilarProducts(Set<Product> similarProducts) {
+        this.similarProducts = similarProducts;
     }
 
     public String getTitle() {
