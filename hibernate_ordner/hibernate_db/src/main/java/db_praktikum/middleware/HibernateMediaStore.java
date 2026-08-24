@@ -2,6 +2,7 @@ package db_praktikum.middleware;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -202,7 +203,7 @@ private void loadSubcategories(Category category) {
     }
     }
 
-    
+   // --------------------------------------------------------------------------------------------------------------
     @Override
     public List<Offer> getOffers(String productId) {
 
@@ -235,8 +236,14 @@ private void loadSubcategories(Category category) {
 
     @Override
     public List<Product> getSimilarCheaperProduct(String productId) {
-        return null;
-    }
+    
+        try(Session session = getSessionFactory().openSession()){
+            
+            Product p = session.get(Product.class, productId);
+            Set<Product> similar = p.getSimilarProducts();
+
+            return session.createQuery("SELECT p from Product WHERE p.productId = :productId JOIN  "
+    }}
 
     @Override
     public void addNewReview(Integer customerId, String productId, 
