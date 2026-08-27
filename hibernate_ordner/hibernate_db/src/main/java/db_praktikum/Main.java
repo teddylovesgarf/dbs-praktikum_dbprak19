@@ -82,7 +82,7 @@ public class Main {
                 case "2" -> ProduktnachTitel();
                 case "3" -> kategorienBaumAnzeigen();
                 case "4" -> produkteNachKategoriePathSuchen();
-                // case "5" -> topProdukteAnzeigen();
+                case "5" -> topProdukteAnzeigen();
                 // case "6" -> aehnlicheGuentigereProdukteAnzeigen();
                 // case "7" -> bewertungHinzufuegen();
                 // case "8" -> trollsAnzeigen();
@@ -228,6 +228,49 @@ public static void produkteNachKategoriePathSuchen(){
     }
 }
 
+public static void topProdukteAnzeigen() {
+
+    System.out.println("\n=== Top-Produkte ===");
+
+    System.out.print("Wie viele Top-Produkte möchtest du sehen? ");
+    String input = scanner.nextLine().trim();
+
+    int k;
+
+    try {
+        k = Integer.parseInt(input);
+    } catch (NumberFormatException e) {
+        System.out.println("Bitte eine gültige Zahl eingeben.");
+        return;
+    }
+
+    if (k <= 0) {
+        System.out.println("Die Anzahl muss größer als 0 sein.");
+        return;
+    }
+
+    List<Product> products = mediaStore.getTopProducts(k);
+
+    if (products.isEmpty()) {
+        System.out.println("Keine Produkte gefunden.");
+        return;
+    }
+
+    System.out.println("\nTop " + k + " Produkte:");
+
+    int platz = 1;
+
+    for (Product product : products) {
+        System.out.println(
+                platz + ". " +
+                product.getProductId() + " | " +
+                product.getTitle() + " | Bewertung: " +
+                product.getAverageRating()
+        );
+
+        platz++;
+    }
+}
 
 
 
