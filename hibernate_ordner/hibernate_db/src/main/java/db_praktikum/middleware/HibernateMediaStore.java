@@ -1,8 +1,8 @@
 package db_praktikum.middleware;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -237,18 +237,59 @@ private void loadSubcategories(Category category) {
     @Override
     public List<Product> getSimilarCheaperProduct(String productId) {
     
-        try(Session session = getSessionFactory().openSession()){
+        try(Session session = getSessionFactory().openSession()){   
+            BigDecimal lowerPrice = session.createQuery(             //günstigster Preis des Ausgangsprodukts
+    "SELECT MIN(o.price) FROM Offer o WHERE o.id.productId = :productId", BigDecimal.class)
+            .setParameter("productId", productId)
+            .getSingleResult();
+        
             
-            Product p = session.get(Product.class, productId);
-            Set<Product> similar = p.getSimilarProducts();
-
-            return session.createQuery("SELECT p from Product WHERE p.productId = :productId JOIN  "
+        return session.createQuery(                 //ausgehend vom productId, über die similarProducts Beziehung zu sp navigieren, dann deren Angebotspreise gegen  Preiswert aus Schritt 1 prüfen
+            "SELECT DISTINCT sp FROM Product p JOIN p.similiarProducts sp JOIN Offer o ON o.id.productId = sp.productId" 
+            + " WHERE p.productId = :productId AND o.price < :lowerPrice",
+     Product.class)
+        .setParameter("productId", productId)
+        .setParameter("lowerPrice", lowerPrice)
+        .getResultList();
+         } catch (Exception e) {
+        System.err.println("Fehler beim Abrufen der Top-Produkte " + e.getMessage());
+        return List.of();
     }}
 
+
+//persist() für neue Entities, die noch keine ID in der DB haben. macht Objekt dauerhaft
     @Override
-    public void addNewReview(Integer customerId, String productId, 
-        Integer rating, Integer helpful, String summary, String reviewText) {
+    public void addNewReview(Integer customerId, String productId, Integer rating, Integer helpful, String summary, String reviewText) {
+    try (Session session = getSessionFactory().openSession()) {
+        session.beginTransaction();
+
+        Product product = session.get(Product.class, productId);
+        Customer customer = session.get(Customer.class, customerId);
+
+        if ((product == null) || (customer == null)) {
+            System.out.print("Fehlehrafte Eingabe"); 
+            return;
+        }
+
+        Review review = new Review();
+        review.setRating(rating);
+        review.setHelpful(helpful);
+        review.setSummary(summary);
+        review.setReviewText(reviewText);
+        review.setProduct(product);
+        review.setCustomer(customer);
+        
+
+        session.persist(review);
+        session.getTransaction().commit();
+    } catch (Exception e) {
+        System.err.println("Fehler beim Speichern der Review " + e.getMessage());
     }
+}
+
+
+
+
 
     @Override
     public List<Customer> getTrolls(double ratingThreshold) {
