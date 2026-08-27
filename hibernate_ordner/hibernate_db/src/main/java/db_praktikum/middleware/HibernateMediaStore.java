@@ -268,6 +268,7 @@ private void loadSubcategories(Category category) {
 
         if ((product == null) || (customer == null)) {
             System.out.print("Fehlehrafte Eingabe"); 
+            session.getTransaction().rollback();
             return;
         }
 
