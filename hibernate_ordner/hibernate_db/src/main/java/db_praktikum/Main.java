@@ -78,20 +78,30 @@ public class Main {
             String auswahl = scanner.nextLine().trim();
 
             switch (auswahl) {
-                case "1" -> ProduktSuche();
-                case "2" -> ProduktnachTitel();
-                case "3" -> kategorienBaumAnzeigen();
-                case "4" -> produkteNachKategoriePathSuchen();
-                // case "5" -> topProdukteAnzeigen();
-                // case "6" -> aehnlicheGuentigereProdukteAnzeigen();
-                // case "7" -> bewertungHinzufuegen();
-                // case "8" -> trollsAnzeigen();
-                // case "9" -> angeboteAnzeigen();
-                case "0" -> {
+                case "1":
+                    ProduktSuche();
+                    break;
+                case "2":
+                    ProduktnachTitel();
+                    break;
+                case "3":
+                    kategorienBaumAnzeigen();
+                    break;
+                case "4":
+                    produkteNachKategoriePathSuchen();
+                    break;
+                case "5":
+                    topProdukteAnzeigen();
+                    break;
+                // case "6": aehnlicheGuentigereProdukteAnzeigen(); break;
+                // case "7": bewertungHinzufuegen(); break;
+                // case "8": trollsAnzeigen(); break;
+                // case "9": angeboteAnzeigen(); break;
+                case "0":
                     System.out.println("\nAuf Wiedersehen!");
                     return;
-                }
-                default -> System.out.println("Ungültige Eingabe!");
+                default:
+                    System.out.println("Ungueltige Eingabe!");
             }
         }
     }

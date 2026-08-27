@@ -224,7 +224,7 @@ private void loadSubcategories(Category category) {
     public List<Product> getTopProducts(int k) {
         try(Session session = getSessionFactory().openSession()){
 
-            return session.createQuery("SELECT p FROM Product p ORDER BY p.averageRating DESC", 
+            return session.createQuery("SELECT p FROM Product p WHERE p.averageRating IS NOT NULL ORDER BY p.averageRating DESC", 
             Product.class)
         .setMaxResults(k)    
         .getResultList();   
