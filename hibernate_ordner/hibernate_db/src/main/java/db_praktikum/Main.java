@@ -60,19 +60,19 @@ public class Main {
     private static void showMainMenu() {
         while (true) {
             System.out.println("\n╔════════════════════════════════╗");
-            System.out.println("║     === MediaStore Menü ===    ║");
-            System.out.println("╠════════════════════════════════╣");
-            System.out.println("║ 1 - Produkt suchen             ║");
-            System.out.println("║ 2 - Produkte nach Titel        ║");
-            System.out.println("║ 3 - Kategorienbaum anzeigen    ║");
-            System.out.println("║ 4 - Kategoriepfad suchen       ║");
-            System.out.println("║ 5 - Top-Produkte anzeigen      ║");
-            System.out.println("║ 6 - Günstigere Produkte        ║");
-            System.out.println("║ 7 - Bewertung hinzufügen       ║");
-            System.out.println("║ 8 - Trolls anzeigen            ║");
-            System.out.println("║ 9 - Angebote anzeigen          ║");
-            System.out.println("║ 0 - Beenden                    ║");
-            System.out.println("╚════════════════════════════════╝");
+            System.out.println("║     === MediaStore Menue ===     ║");
+            System.out.println("╠ ════════════════════════════════ ╣");
+            System.out.println("║ 1 - Produkt suchen               ║");
+            System.out.println("║ 2 - Produkte nach Titel-Pattern  ║");
+            System.out.println("║ 3 - Kategorienbaum anzeigen      ║");
+            System.out.println("║ 4 - Produkte nach Kategoriepfad  ║");
+            System.out.println("║ 5 - Top-Produkte anzeigen        ║");
+            System.out.println("║ 6 - Guenstigere Produkte         ║");
+            System.out.println("║ 7 - Bewertung hinzufuegen        ║");
+            System.out.println("║ 8 - Trolls anzeigen              ║");
+            System.out.println("║ 9 - Angebote anzeigen            ║");
+            System.out.println("║ 0 - Beenden                      ║");
+            System.out.println("╚ ════════════════════════════════ ╝");
             System.out.print("Auswahl: ");
 
             String auswahl = scanner.nextLine().trim();
@@ -83,7 +83,7 @@ public class Main {
                 case "3" -> kategorienBaumAnzeigen();
                 case "4" -> produkteNachKategoriePathSuchen();
                 // case "5" -> topProdukteAnzeigen();
-                // case "6" -> aehnlicheGuentigereProdukteAnzeigen();
+                // case "6" -> aehnlicheGuenstigereProdukteAnzeigen();
                 // case "7" -> bewertungHinzufuegen();
                 // case "8" -> trollsAnzeigen();
                 // case "9" -> angeboteAnzeigen();
