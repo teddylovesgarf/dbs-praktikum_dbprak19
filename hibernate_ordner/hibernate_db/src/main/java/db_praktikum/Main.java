@@ -8,6 +8,8 @@ import java.util.Properties;
 import java.util.Scanner;
 
 import db_praktikum.entities_collection.Category;
+import db_praktikum.entities_collection.Customer;
+import db_praktikum.entities_collection.Offer;
 import db_praktikum.entities_collection.Product;
 import db_praktikum.middleware.HibernateMediaStore;
 import db_praktikum.schnittstelle.StoreInterface;
@@ -93,10 +95,18 @@ public class Main {
                 case "5":
                     topProdukteAnzeigen();
                     break;
-                // case "6": aehnlicheGuentigereProdukteAnzeigen(); break;
-                // case "7": bewertungHinzufuegen(); break;
-                // case "8": trollsAnzeigen(); break;
-                // case "9": angeboteAnzeigen(); break;
+                case "6": 
+                    aehnlicheGuentigereProdukteAnzeigen(); 
+                    break;
+                case "7": 
+                    bewertungHinzufuegen(); 
+                        break;
+                case "8": 
+                    trollsAnzeigen(); 
+                        break;
+                case "9": 
+                    angeboteAnzeigen(); 
+                        break;
                 case "0":
                     System.out.println("\nAuf Wiedersehen!");
                     return;
@@ -238,11 +248,15 @@ public static void produkteNachKategoriePathSuchen(){
     }
 }
 
+
+
+/*========================================================================================================= */
+
 public static void topProdukteAnzeigen() {
 
     System.out.println("\n=== Top-Produkte ===");
 
-    System.out.print("Wie viele Top-Produkte möchtest du sehen? ");
+    System.out.print("Wie viele Top-Produkte moechtest du sehen? ");
     String input = scanner.nextLine().trim();
 
     int k;
@@ -282,15 +296,207 @@ public static void topProdukteAnzeigen() {
     }
 }
 
+/*========================================================================================================= */
 
+public static void aehnlicheGuentigereProdukteAnzeigen() {
 
+    System.out.println("\n=== Aehnliche und guenstigere Produkte ===");
 
+    System.out.print("Bitte Produkt-ID eingeben oder 0 zum Abbrechen: ");
+    String productId = scanner.nextLine().trim();
 
+    if (productId.equals("0")) {
+        System.out.println("Suche abgebrochen.");
+        return;
+    }
 
+    if (productId.isBlank()) {
+        System.out.println("Keine Produkt-ID eingegeben.");
+        return;
+    }
 
+    List<Product> products =
+            mediaStore.getSimilarCheaperProduct(productId);
 
+    if (products.isEmpty()) {
+        System.out.println(
+            "Keine aehnlichen und guenstigeren Produkte gefunden."
+        );
+        return;
+    }
 
+    System.out.println("\n=== Gefundene Produkte ===");
+
+    for (Product product : products) {
+
+        System.out.println(
+            product.getProductId() +
+            " | " +
+            product.getTitle() +
+            " | Bewertung: " +
+            product.getAverageRating()
+        );
+    }
 }
+
+/*========================================================================================================= */
+public static void bewertungHinzufuegen() { 
+    
+    System.out.println("\n=== Bewertung hinzufuegen ===");
+
+    // CustomerID
+    System.out.print("Customer-ID eingeben oder 0 zum Abbrechen: ");
+    String customerInput = scanner.nextLine().trim();
+
+    if (customerInput.equals("0")) {
+        System.out.println("Vorgang abgebrochen.");
+        return;
+    }
+
+    int customerId;
+
+    try {
+        customerId = Integer.parseInt(customerInput);
+    } catch (NumberFormatException e) {
+        System.out.println("Ungültige Customer-ID.");
+        return;
+    }
+
+
+    // ProduktID
+    System.out.print("Produkt-ID eingeben: ");
+    String productId = scanner.nextLine().trim();
+
+    if (productId.isBlank()) {
+        System.out.println("Keine Produkt-ID eingegeben.");
+        return;
+    }
+
+
+    // bewertung
+    System.out.print("Bewertung eingeben (1-5): ");
+    String ratingInput = scanner.nextLine().trim();
+
+    int rating;
+
+    try {
+        rating = Integer.parseInt(ratingInput);
+    } catch (NumberFormatException e) {
+        System.out.println("Ungültige Bewertung.");
+        return;
+    }
+
+    if (rating < 1 || rating > 5) {
+        System.out.println("Die Bewertung muss zwischen 1 und 5 liegen.");
+        return;
+    }
+
+
+    // helpful
+    System.out.print("Helpful-Wert eingeben: ");
+    String helpfulInput = scanner.nextLine().trim();
+
+    int helpful;
+
+    try {
+        helpful = Integer.parseInt(helpfulInput);
+    } catch (NumberFormatException e) {
+        System.out.println("Ungültiger Helpful-Wert.");
+        return;
+    }
+
+
+    //Zusammenfassung
+    System.out.print("Zusammenfassung eingeben: ");
+    String summary = scanner.nextLine().trim();
+
+
+    // Bewertungstext
+    System.out.print("Bewertungstext eingeben: ");
+    String reviewText = scanner.nextLine().trim();
+
+
+    mediaStore.addNewReview(
+        customerId,
+        productId,
+        rating,
+        helpful,
+        summary,
+        reviewText
+    );
+
+    System.out.println("\nBewertung wurde hinzugefügt.");
+}
+
+/*========================================================================================================= */
+
+public static void trollsAnzeigen() {
+
+    System.out.println("\n=== Trolle anzeigen ===");
+
+    System.out.print("Rating-Schwellenwert eingeben: ");
+
+    String input = scanner.nextLine().trim();
+
+    double threshold;
+
+    try {
+        threshold = Double.parseDouble(input);
+    } catch (NumberFormatException e) {
+        System.out.println("Bitte eine gültige Zahl eingeben.");
+        return;
+    }
+
+    List<Customer> trolls = mediaStore.getTrolls(threshold);
+
+    if (trolls.isEmpty()) {
+        System.out.println("Keine Trolle gefunden.");
+        return;
+    }
+
+    System.out.println("\nGefundene Trolle:");
+
+    for (Customer customer : trolls) {
+        System.out.println(customer);
+    }
+}
+
+/*========================================================================================================= */
+
+public static void angeboteAnzeigen() {
+
+    System.out.println("\n=== Angebote anzeigen ===");
+
+    System.out.print("Bitte Produkt-ID eingeben oder 0 zum Abbrechen: ");
+    String productId = scanner.nextLine().trim();
+
+    if (productId.equals("0")) {
+        System.out.println("Suche abgebrochen.");
+        return;
+    }
+
+    if (productId.isBlank()) {
+        System.out.println("Keine Produkt-ID eingegeben.");
+        return;
+    }
+
+    List<Offer> offers = mediaStore.getOffers(productId);
+
+    if (offers.isEmpty()) {
+        System.out.println("Keine Angebote für dieses Produkt gefunden.");
+        return;
+    }
+
+    System.out.println("\n=== Angebote ===");
+
+    for (Offer offer : offers) {
+        System.out.println(offer);
+    }
+}
+}
+
+
+
 //Testmethoden
 
 //getProducts(String pattern)

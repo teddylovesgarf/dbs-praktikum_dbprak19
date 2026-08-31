@@ -1,6 +1,7 @@
 package db_praktikum.middleware;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
 
@@ -204,6 +205,7 @@ private void loadSubcategories(Category category) {
     }
 
    // --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
     @Override
     public List<Offer> getOffers(String productId) {
 
@@ -245,7 +247,7 @@ private void loadSubcategories(Category category) {
         
             
         return session.createQuery(                 //ausgehend vom productId, über die similarProducts Beziehung zu sp navigieren, dann deren Angebotspreise gegen  Preiswert aus Schritt 1 prüfen
-            "SELECT DISTINCT sp FROM Product p JOIN p.similiarProducts sp JOIN Offer o ON o.id.productId = sp.productId" 
+            "SELECT DISTINCT sp FROM Product p JOIN p.similarProducts sp JOIN Offer o ON o.id.productId = sp.productId" 
             + " WHERE p.productId = :productId AND o.price < :lowerPrice",
      Product.class)
         .setParameter("productId", productId)
@@ -258,6 +260,8 @@ private void loadSubcategories(Category category) {
 
 
 //persist() für neue Entities, die noch keine ID in der DB haben. macht Objekt dauerhaft
+
+//
     @Override
     public void addNewReview(Integer customerId, String productId, Integer rating, Integer helpful, String summary, String reviewText) {
     try (Session session = getSessionFactory().openSession()) {
@@ -279,6 +283,7 @@ private void loadSubcategories(Category category) {
         review.setReviewText(reviewText);
         review.setProduct(product);
         review.setCustomer(customer);
+        review.setReviewDate(LocalDate.now());
         
 
         session.persist(review);
@@ -290,10 +295,25 @@ private void loadSubcategories(Category category) {
 
 
 
-
+/*Die Methode soll eine Liste von Nutzern ausgeben, 
+deren Durchschnittsbewertung unter einem spezifizierten Rating ist.*/  
 
     @Override
     public List<Customer> getTrolls(double ratingThreshold) {
-        return null;
-    }   
+        try (Session session = getSessionFactory().openSession()) {
+
+        return session.createQuery("SELECT r.customer FROM Review r  GROUP BY r.customer HAVING AVG(r.rating) < :threshold", 
+        Customer.class)
+    .setParameter("threshold", ratingThreshold)
+    .getResultList();
+
+
+    }   catch (Exception e) {
+        System.err.println(
+            "Fehler beim Abrufen der Trolle: " + e.getMessage()
+        );
+        return List.of();
+    }
+}
+
 }

@@ -82,4 +82,15 @@ public Offer () {
     public void setId(OfferId id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Offer{" +
+            "product =" + (product != null ? product.getTitle() : "?") +
+            ", store =" + store +
+            ", price =" + price +
+	        ", condition ='" + id.getCondition() + '\'' +			
+            ", currency ='" + currency + '\'' +
+            '}';
+}
 }
