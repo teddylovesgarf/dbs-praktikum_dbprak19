@@ -52,10 +52,7 @@ public class Main {
         }
     }
             
-            //Für die Test-Methoden
-            //ProductTest(mediaStore);
-            //CategoryTreeTest(mediaStore);
-            //CategoryPathTest(mediaStore);
+
 
                   
                 // === HAUPTMENÜ ===
@@ -139,7 +136,7 @@ public static void ProduktSuche(){
         break;   
     }
 
-    System.out.println("Keine Produkt-Id eingegeben.");
+    System.out.println("Keine Produkt-ID eingegeben.");
     
 }
     Product product = mediaStore.getProduct(productId);
@@ -157,6 +154,8 @@ public static void ProduktSuche(){
     System.out.println("Durchschnittsbewertung: " + product.getAverageRating());
     System.out.println("Bild: " + product.getPicture()); 
 }
+
+/*========================================================================================================= */
 
 public static void ProduktnachTitel (){
     System.out.println("Suche Produkte nach Titeln: ");
@@ -202,6 +201,8 @@ public static void kategorienBaumAnzeigen() {
     printCategoryTree(root, 0);
 }
 
+/*========================================================================================================= */
+
 private static void printCategoryTree(Category category, int level) {
     for (int i = 0; i < level; i++) {
         System.out.print("  ");
@@ -214,6 +215,9 @@ private static void printCategoryTree(Category category, int level) {
         printCategoryTree(subcategory, level + 1);
     }
 }
+
+/*========================================================================================================= */
+
 
 public static void produkteNachKategoriePathSuchen(){
        
@@ -264,7 +268,7 @@ public static void topProdukteAnzeigen() {
     try {
         k = Integer.parseInt(input);
     } catch (NumberFormatException e) {
-        System.out.println("Bitte eine gültige Zahl eingeben.");
+        System.out.println("Bitte eine gueltige Zahl eingeben.");
         return;
     }
 
@@ -358,7 +362,7 @@ public static void bewertungHinzufuegen() {
     try {
         customerId = Integer.parseInt(customerInput);
     } catch (NumberFormatException e) {
-        System.out.println("Ungültige Customer-ID.");
+        System.out.println("Ungueltige Customer-ID.");
         return;
     }
 
@@ -382,7 +386,7 @@ public static void bewertungHinzufuegen() {
     try {
         rating = Integer.parseInt(ratingInput);
     } catch (NumberFormatException e) {
-        System.out.println("Ungültige Bewertung.");
+        System.out.println("Ungueltige Bewertung.");
         return;
     }
 
@@ -401,7 +405,7 @@ public static void bewertungHinzufuegen() {
     try {
         helpful = Integer.parseInt(helpfulInput);
     } catch (NumberFormatException e) {
-        System.out.println("Ungültiger Helpful-Wert.");
+        System.out.println("Ungueltiger Helpful-Wert.");
         return;
     }
 
@@ -443,7 +447,7 @@ public static void trollsAnzeigen() {
     try {
         threshold = Double.parseDouble(input);
     } catch (NumberFormatException e) {
-        System.out.println("Bitte eine gültige Zahl eingeben.");
+        System.out.println("Bitte eine gueltige Zahl eingeben.");
         return;
     }
 
@@ -494,61 +498,4 @@ public static void angeboteAnzeigen() {
     }
 }
 }
-
-
-
-//Testmethoden
-
-//getProducts(String pattern)
-// private static void ProductTest(StoreInterface mediaStore) {
-//     System.out.println("Test: getProducts(String pattern)");
-
-//     List<Product> products = store.getProducts("V");
-
-//     for (Product product : products) {
-//         System.out.println(product.getProductId() + " | " + product.getTitle());
-//     }
-// }
-
-//getCategoryTree
-// private static void CategoryTreeTest(StoreInterface mediaStore) {
-//     System.out.println("Test: getCategoryTree()");
-
-//     Category root = mediaStore.getCategoryTree();
-
-//     if (root == null) {
-//         System.out.println("Keine Wurzelkategorie gefunden.");
-//         return;
-//     }
-
-//     printCategoryTree(root, 0);
-// }
-// private static void printCategoryTree(Category category, int level) {
-//     String indentation = "  ".repeat(level);
-
-//     System.out.println(indentation + category.getCategoryId() + " | " + category.getCategoryName());
-
-//     for (Category subcategory : category.getSubcategories()) {
-//         printCategoryTree(subcategory, level + 1);
-//     }
-// }
-
-//getProductsByCategoryPath braucht CategoryTreeTest
-// private static void CategoryPathTest(StoreInterface mediaStore){
-
-//     List<String> categoryPath = Arrays.asList("Features", "Alle SACDs");
-//     List<Product> products = mediaStore.getProductsByCategoryPath(categoryPath);
-
-//     if(products.isEmpty()){
-//         System.out.println("Keine Produkte für diesen Kategoriepfad gefunden");
-//         return;
-//     }
-//     for(Product product : products){
-//         System.out.println(product.getProductId() + " | " + product.getTitle());
-//     }
-
-
-
-// }
-
 
